@@ -3,7 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var engine = require('ejs-locals');
 var cookieParser = require('cookie-parser');
-// var mongo = require('mongodb');
+var mongo = require('mongodb');
 var app = express();
 
 
@@ -54,6 +54,35 @@ app.get('/submit', function (req, res) {
 app.get('/hypothesis', function (req, res) {
 	res.render('hypothesis');
 });
+
+
+
+// submitting data
+app.post("/submit_hypothesis", function(req, res, next) {
+	mongo.Db.connect(mongoUri, function(err, db) {
+		db.collection('TIU_submissions', function(err, col) {
+			var student = req.body.student_name;
+			var hypothesis = req.body.hypothesis;
+
+			if (student == null || hypothesis == null ||
+				student == "" || hypothesis == "") {
+				res.send("Missing Fields!");
+			} else {
+				col.find({'student':student}).toArray(function(err, items){
+					if (items.length != 0) {
+						res.send("You've already submitted a hypothesis!");
+					} else {
+						col.insert({'student':student, 'hypothesis':hypothesis}, function(err, items) {
+							res.redirect('hypothesis');
+						});
+						
+					}
+				});
+			}
+		});
+	});
+});
+
 
 var port = process.env.PORT || 5000;
 
