@@ -13,16 +13,17 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
     "test": "node app.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lucyq/TIU-proj.git"
   },
-  "author": "",
+  "author": "Lucy Qin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lucyq/TIU-proj/issues"
   },
-  "homepage": "https://github.com/lucyq/TIU-proj"
+  "homepage": "tiu-proj.herokuapp.com"
 }
