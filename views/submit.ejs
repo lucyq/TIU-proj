@@ -28,19 +28,14 @@
 
 			<div id="community_map">
 			<h3>Submit a new food resource</h3>
-				<form action = "/submit_location.json">
+				<form action="/submit_location" method="post">
 					Name: <input type="text" size="50" name="name"/><br><br>
-					Name of location: <input size="50" type="text" name="name"/><br><br>
-					Address of location: <input type="text" size="100" name="name"/><br><br>
-					Type of food resource: 
-					<select>
-						<option value="restaurant">Restaurant</option>
-						<option value="restaurant">Restaurant</option>
-						<option value="restaurant">Restaurant</option>
-						<option value="restaurant">Restaurant</option>
-						<option value="restaurant">Restaurant</option>
-						<option value="restaurant">Restaurant</option>
-					</select>
+					Name of location: <input size="50" type="text" name="location_name"/><br><br>
+					Address of location: <input type="text" size="100" name="location_address"/><br><br>
+					Type of food resource: <br>
+					<input type="radio" name="location_type" value="restaurant"> Restaurant</input>
+					<input type="radio" name="location_type" value="grocery_store"> Grocery Store</input>
+					<input type="radio" name="location_type" value="food_truck"> Food Truck</input>
 					<br><br>
 					<input type="submit" value="Submit"/>
 				</form>

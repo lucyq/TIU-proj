@@ -76,7 +76,7 @@ app.post("/submit_hypothesis", function(req, res, next) {
 			} else {
 				col.find({'student':student}).toArray(function(err, items){
 					if (items.length != 0) {
-						res.send("alert('You've already submitted a hypothesis!')");
+						res.send("You've already submitted a hypothesis!");
 					} else {
 						col.insert({'student':student, 'hypothesis':hypothesis}, function(err, items) {
 							res.redirect('hypothesis');
@@ -88,6 +88,44 @@ app.post("/submit_hypothesis", function(req, res, next) {
 		});
 	});
 });
+
+
+
+app.post("/submit_location", function(req, res, next) {
+	mongo.Db.connect(mongoUri, function(err, db) {
+		if (err) {
+			res.send("Error connecting to database!");
+		}
+		db.collection('TIU_locations', function(err, col) {
+			if (err) {
+				res.send("Database Error!");
+			}
+			var student = req.body.name;
+			var location_name = req.body.location_name;
+			var location_address = req.body.location_address;
+			var location_type = req.body.location_type;
+			
+			if (student == null || location_name == null || 
+				location_address == null || location_type == null ||
+				student == "" || location_name == "" || 
+				location_address == "" || location_type == "") {
+				res.send("Missing Fields!");
+			} else {
+				col.find({'student':student}).toArray(function(err, items){
+					col.insert({'student':student, 'location_name':location_name, 
+								'location_address':location_address, 'location_type':location_type}, function(err, items) {
+						res.redirect('communityMap');
+					});
+				});
+			}
+		});
+	});
+});
+
+
+
+
+
 
 app.get('/hypothesis', function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
@@ -101,7 +139,7 @@ app.get('/hypothesis', function(req, res, next) {
 					hyp_data += "</ul></div><h1>Student Hypotheses</h1><div class='info'>";	
 					for (var count = 0; count < items.length; count++) {
 						hyp_data += "<h4>Student: " + items[count].student + "</h4>" +
-									"<p>" + items[count].hypothesis + "</p><br><br>";
+									"<p>" + items[count].hypothesis + "</p><br>";
 					}
 					hyp_data += "</div></div></body>";
 				res.send(hyp_data);
