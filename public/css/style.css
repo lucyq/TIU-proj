@@ -1,0 +1,118 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200);
+@import url(http://fonts.googleapis.com/css?family=Lato:100);
+
+body {
+		background-image: url('../images/beige-fabric.jpg');
+		background-size: 800px 600px;
+
+
+}
+
+.content {	
+
+}
+
+p {
+	font-family: 'Source Sans Pro';
+	font-size: 16px;
+	color: rgb(100, 100, 100);
+}
+
+a {
+	color: #FFFFFF;
+}
+
+a:hover {
+	color: rgb(181, 208, 186); /* faded green */
+	color: rgb(181, 204, 208); /* light blue */
+}
+
+@font-face {
+	font-family: titleFont;
+	src: url(../fonts/Ostrich.otf); 
+	 
+}
+
+@font-face{
+	font-family: subtitleFont;
+	/*src: url(../fonts/doodle.ttf);*/
+	src: url(../fonts/ostrich-light.ttf);
+
+	
+}
+
+#nav {
+	background-color: rgba(100,100,100,0.7);
+	font-family: 'Lato';
+	font-size: 16px;
+	padding: 3px;
+
+}
+ul {
+	text-align: center;
+	color: #FFFFFF;
+}
+
+li {
+	display: inline-block;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+h1 {
+	font-family: titleFont;
+	font-size: 120px;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+h2 {
+	font-family: 'Lato';
+
+	color: rgb(204, 102, 102); /* coral */
+	color: #FFFFFF;
+	font-size: 28px;
+	text-align: center;
+}
+
+
+h3 {
+	font-family: 'Lato';
+	font-size: 20px;
+	text-align: center;
+	color:#FFFFFF;
+}
+
+
+.info {
+	background-color: rgba(139, 108, 148, 0.2);
+	margin-right: 80px;
+	margin-left: 80px;
+	padding: 10px;
+	padding-left: 30px;
+	padding-right: 30px;
+
+}
+
+/* Community Map needs */
+html {
+	height: 100%;
+}
+
+#map_canvas {
+	width: 60%;
+	height: 95%;
+	position: absolute;
+	left: 10px;
+	float: left;
+}
+
+
+#desc {
+	width: 33%;
+	height: 95%;
+	right: 1px;
+	float: right;
+	position: absolute;
+}
+
