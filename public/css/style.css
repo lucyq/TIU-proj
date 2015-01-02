@@ -83,6 +83,12 @@ h3 {
 	color:#FFFFFF;
 }
 
+h4 {
+	font-family: 'Lato';
+	font-size: 18px;
+	text-align: left;
+	color: rgb(60,60,60);
+}
 
 .info {
 	background-color: rgba(139, 108, 148, 0.2);
