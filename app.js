@@ -89,9 +89,10 @@ app.post("/submit_hypothesis", function(req, res, next) {
 	});
 });
 
-app.get('/hypothesis.json', function(req, res, next){
+app.get('/hyp_data.json', function(req, res, next){
 	mongo.Db.connect(mongoUri, function(err, db){
 		db.collection('TIU_submissions', function(err, col){
+			console.log("made it in here!");
 			collection.find().toArray(function(err, items) {
 				res.send(items);
 			});
