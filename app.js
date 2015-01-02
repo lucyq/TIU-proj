@@ -137,7 +137,7 @@ app.get('/hypothesis', function(req, res, next) {
 					hyp_data += "<body><div><div id='nav'>";
 					hyp_data += "<ul id='nav_links'><li><a href='/>THIS IS US</a></li><li>|</li><li><a href='hypothesis'>Student Hypotheses</a></li><li><a href='whatWeEat'>What We Eat</a></li><li><a href='communityMap'>Community Mapping</a></li><li><a href='studentProjs'>Student Projects</a></li><li><a href='submit'>Submit Data</a></li>";
 					hyp_data += "</ul></div><h1>Student Hypotheses</h1><div class='info'>";	
-					for (var count = 0; count < items.length; count++) {
+					for (var count = items.length; count >= 0; count--) {
 						hyp_data += "<h4>Student: " + items[count].student + "</h4>" +
 									"<p>" + items[count].hypothesis + "</p><br>";
 					}
