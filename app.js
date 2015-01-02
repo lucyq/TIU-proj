@@ -60,7 +60,13 @@ app.get('/hypothesis', function (req, res) {
 // submitting data
 app.post("/submit_hypothesis", function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
+		if (err) {
+			res.send("ERROR!");
+		}
 		db.collection('TIU_submissions', function(err, col) {
+			if (err) {
+				res.send("ERROR!!");
+			}
 			var student = req.body.student_name;
 			var hypothesis = req.body.hypothesis;
 
