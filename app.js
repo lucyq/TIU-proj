@@ -123,7 +123,17 @@ app.post("/submit_location", function(req, res, next) {
 });
 
 
-
+app.get('/location_data', function (req, res, next) {
+	mongo.Db.connect(mongoUri, function(err, db) {
+		db.collection('TIU_locations', function(err, col){
+			if (!err) {
+				col.find().toArray(function(err, items) {
+					res.send(items);
+				});
+			}
+		});
+	});
+});
 
 
 
