@@ -76,7 +76,7 @@ app.post("/submit_hypothesis", function(req, res, next) {
 			} else {
 				col.find({'student':student}).toArray(function(err, items){
 					if (items.length != 0) {
-						res.send("You've already submitted a hypothesis!");
+						res.send("alert('You've already submitted a hypothesis!')");
 					} else {
 						col.insert({'student':student, 'hypothesis':hypothesis}, function(err, items) {
 							res.redirect('hypothesis');
@@ -100,7 +100,7 @@ app.get('/hypothesis', function(req, res, next) {
 					hyp_data += "<ul id='nav_links'><li><a href='/>THIS IS US</a></li><li>|</li><li><a href='hypothesis'>Student Hypotheses</a></li><li><a href='whatWeEat'>What We Eat</a></li><li><a href='communityMap'>Community Mapping</a></li><li><a href='studentProjs'>Student Projects</a></li><li><a href='submit'>Submit Data</a></li>";
 					hyp_data += "</ul></div><h1>Student Hypotheses</h1><div class='info'>";	
 					for (var count = 0; count < items.length; count++) {
-						hyp_data += "<h4>Student Name: " + items[count].student + "</h4>" +
+						hyp_data += "<h4>Student: " + items[count].student + "</h4>" +
 									"<p>" + items[count].hypothesis + "</p><br><br>";
 					}
 					hyp_data += "</div></div></body>";
