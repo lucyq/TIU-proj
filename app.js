@@ -89,6 +89,15 @@ app.post("/submit_hypothesis", function(req, res, next) {
 	});
 });
 
+app.get('/hypothesis.json', function(req, res, next){
+	mongo.Db.connect(mongoUri, function(err, db){
+		db.collection('TIU_submissions', function(err, col){
+			collection.find().toArray(function(err, items) {
+				res.send(items);
+			});
+		});
+	});
+});
 
 var port = process.env.PORT || 5000;
 
