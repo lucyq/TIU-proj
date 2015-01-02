@@ -61,11 +61,11 @@ app.get('/hypothesis', function (req, res) {
 app.post("/submit_hypothesis", function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		if (err) {
-			res.send("ERROR!");
+			res.send("Error connecting to database!");
 		}
 		db.collection('TIU_submissions', function(err, col) {
 			if (err) {
-				res.send("ERROR!!");
+				res.send("Database Error!");
 			}
 			var student = req.body.student_name;
 			var hypothesis = req.body.hypothesis;
