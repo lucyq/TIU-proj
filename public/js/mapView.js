@@ -8,7 +8,7 @@ var map;
 
 
 var mapOptions = {
-	zoom: 13,
+	zoom: 12,
 	center: BLS, 
 	mapTypeId: google.maps.MapTypeId.ROADMAP
 };
@@ -20,7 +20,8 @@ function init() {
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 	var request = new XMLHttpRequest();
-		var data_link = "/location_data"; // "http://localhost:5000/location_data" ||  
+//		var data_link = "/location_data"; 
+		var data_link = "http://localhost:5000/location_data";
 		request.open("GET", data_link, true);
 		request.send();
 		request.onreadystatechange = function() {
@@ -28,8 +29,8 @@ function init() {
 				
 				data = JSON.parse(request.responseText);
 				
-				codeAddress();
-				renderMap();
+				renderMarkers();
+				// renderMap();
 				// console.log(data);	
 			}
 	};
@@ -37,9 +38,8 @@ function init() {
 
 };
 
-function codeAddress() {
+function renderMarkers() {
 
-	var count = 0;
 	for (k in data) {
 		var address = data[k]["location_address"];
 		geocoder.geocode({'address': address}, function(results, status) {
@@ -51,9 +51,21 @@ function codeAddress() {
 					icon: '../images/marker.png',
 					position: pos
 				});
+
+				var infoWindow = new google.maps.InfoWindow();
+
+				var infoList = document.createElement("ul");
+				infoList.id = "infoDiv";
+				infoList.innerHTML = data[k]["location_name"];
+
+				google.maps.event.addListener(marker, 'click', (function(infoList) {
+					return function() {
+						infoWindow.setContent(infoList);
+						infoWindow.open(map, this);
+					}
+				})(infoList));
 			}
 		});
-		count++;
 	}
 }
 
