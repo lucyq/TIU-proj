@@ -86,6 +86,7 @@ h1 {
 h2 {
 	font-family: 'subtitleFont';
 	color: #FFFFFF;
+	color: rgba(255,235,182,0.8);
 	font-size: 40px;
 	text-align: center;
 }
@@ -112,7 +113,7 @@ h4 {
 	background-color: rgba(66, 124, 68, 0.3);
 	background-color: rgba(102, 125, 149, 0.5);
 	background-color: rgba(116,151,164,0.5);
-	
+
 	
 	margin-right: 80px;
 	margin-left: 80px;
@@ -148,6 +149,8 @@ html {
 	width: 33%;
 	height: 400px;
 	background-color: rgba(139, 108, 148, 0.2);
+		background-color: rgba(116,151,164,0.5);
+
 	right: 20px;
 	float: right;
 	position: absolute;
@@ -158,6 +161,8 @@ html {
 	width: 60%;
 	height: 400px;
 	background-color: rgba(139, 108, 148, 0.2);
+		background-color: rgba(116,151,164,0.5);
+
 	left: 20px;
 	float: left;
 	position: absolute;
