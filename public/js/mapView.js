@@ -21,17 +21,14 @@ function init() {
 
 	var request = new XMLHttpRequest();
 		var data_link = "/location_data"; 
-//		var data_link = "http://localhost:5000/location_data";
 		request.open("GET", data_link, true);
 		request.send();
 		request.onreadystatechange = function() {
 			if (request.readyState==4 && request.status==200) {
 				
 				data = JSON.parse(request.responseText);
-				
+			
 				renderMarkers();
-				// renderMap();
-				// console.log(data);	
 			}
 	};
 		map.panTo(BLS);
@@ -46,38 +43,29 @@ function renderMarkers() {
 		geocoder.geocode({'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var pos = results[0].geometry.location;
-				console.log("Position: " + pos);
+			
 				var marker = new google.maps.Marker({
 					map: map,
 					icon: '../images/marker.png',
 					position: pos
 				});
 
-				var infoWindow = new google.maps.InfoWindow();
 
-				var infoList = document.createElement("ul");
-				infoList.id = "infoDiv";
-				infoList.innerHTML = location_name;
+				console.log(location_name);
 
-				google.maps.event.addListener(marker, 'click', (function(infoList) {
-					return function() {
-						infoWindow.setContent(infoList);
-						infoWindow.open(map, this);
-					}
-				})(infoList));
+				var contentString = "<div class='infoDiv'><h4>" + location_name + "</h4><p>" + address + "</p></div>";
+				
+
+				var infoWindow = new google.maps.InfoWindow({
+					content: contentString,
+					maxWidth: 200,
+					maxHeight: 400
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infoWindow.open(map, marker);
+				});
 			}
 		});
 	}
 }
-
-
-function renderMap() {
-//	console.log(data[0]["location_address"]);
-	// data[i]["location_address"]
-//	var locations = data
-	// create map
-	// update map and go there!
-
-};
-
-

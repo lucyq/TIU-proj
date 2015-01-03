@@ -105,6 +105,12 @@ html {
 	height: 100%;
 }
 
+.infoDiv {
+	font-family: 'Lato';
+	font-size: 14px;
+	color: #000000;
+}
+
 #map_canvas {
 	width: 60%;
 	height: 95%;
