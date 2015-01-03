@@ -85,8 +85,9 @@ h1 {
 
 h2 {
 	font-family: 'subtitleFont';
-	color: #FFFFFF;
 	color: rgba(255,235,182,0.8);
+
+	color: #FFFFFF;
 	font-size: 40px;
 	text-align: center;
 }
