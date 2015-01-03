@@ -20,7 +20,7 @@ function init() {
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 	var request = new XMLHttpRequest();
-		var data_link = "http://localhost:5000/location_data"; // || "tiu-proj.herokuapp.com/location_data";
+		var data_link = "http://localhost:5000/location_data" ||  "tiu-proj.herokuapp.com/location_data";
 		request.open("GET", data_link, true);
 		request.send();
 		request.onreadystatechange = function() {
