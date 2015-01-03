@@ -48,6 +48,7 @@ function codeAddress() {
 				console.log("Position: " + pos);
 				var marker = new google.maps.Marker({
 					map: map,
+					icon: '../images/marker.png',
 					position: pos
 				});
 			}
