@@ -1,7 +1,6 @@
 <% layout('layout') -%>
 <head>
-	<link href="../css/CommunityMap.css" rel="stylesheet">
-  
+
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true"></script>
 	<script src="../js/mapView.js"></script>
 </head>
@@ -9,13 +8,18 @@
 <body onload="init()">
 	<h1>Community Map</h1>
 
-		<div class="content">
+		
 
 		<div id ="map_canvas"></div>
   	
-  		<div class="info" id="desc">
-			<h3>Description</h3>
+      <div id="viz">
+        <h3>Visualization</h3>
+      </div>
+  		<div id="desc">
+			<h3>Filter by</h3>
   		</div>
+
+
   	
 <!--
   		<div class="info" id="chart_view">
@@ -26,6 +30,6 @@
   			<h4>Filter</h4>
   		</div>
 -->
-	</div>
+
 
 </body>

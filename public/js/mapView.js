@@ -7,6 +7,7 @@ var geocoder;
 var map;
 
 
+
 var mapOptions = {
 	zoom: 12,
 	center: BLS, 
@@ -58,8 +59,7 @@ function renderMarkers() {
 
 				var infoWindow = new google.maps.InfoWindow({
 					content: contentString,
-					maxWidth: 200,
-					maxHeight: 400
+					maxWidth: 200
 				});
 
 				google.maps.event.addListener(marker, 'click', function() {

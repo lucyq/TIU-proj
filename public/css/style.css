@@ -2,10 +2,10 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100);
 
 body {
-		background-image: url('../images/beige-fabric.jpg');
-		background-size: 800px 600px;
+	background-image: url('../images/beige-fabric.jpg');
+	background-size: 800px 600px;
 
-
+	margin-bottom: 40px;
 }
 
 .content {	
@@ -112,19 +112,33 @@ html {
 }
 
 #map_canvas {
-	width: 60%;
-	height: 95%;
+	width: 100%;
+	height: 400px;
 	position: absolute;
-	left: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
 	float: left;
 }
 
 
 #desc {
+	margin-top: 440px;
 	width: 33%;
-	height: 95%;
-	right: 1px;
+	height: 300px;
+	background-color: rgba(139, 108, 148, 0.2);
+	right: 20px;
 	float: right;
 	position: absolute;
+}
+
+#viz {
+	margin-top: 440px;
+	width: 60%;
+	height: 300px;
+	background-color: rgba(139, 108, 148, 0.2);
+	left: 20px;
+	float: left;
+	position: absolute;
+
 }
 
