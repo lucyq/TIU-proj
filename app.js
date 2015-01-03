@@ -140,7 +140,7 @@ app.get('/hypothesis', function(req, res, next) {
 				if (!err) {
 					hyp_data = "<!DOCTYPE HTML><html><head><title>This Is Us</title><link rel='stylesheet' href='bootstrap/dist/css/bootstrap.css'><link rel='stylesheet' href='css/style.css'><script src='jquery/dist/jquery.js'></script><script src='bootstrap/dist/js/bootstrap.js'></script><link rel='SHORTCUT ICON' href='images/tree_favicon.gif' type='image/x-icon'/><link rel='ICON' href='images/tree_favicon.gif' type='image/ico'/></head>";
 					hyp_data += "<body><div><div id='nav'>";
-					hyp_data += "<ul id='nav_links'><li><a href='/>THIS IS US</a></li><li>|</li><li><a href='hypothesis'>Student Hypotheses</a></li><li><a href='whatWeEat'>What We Eat</a></li><li><a href='communityMap'>Community Mapping</a></li><li><a href='studentProjs'>Student Projects</a></li><li><a href='submit'>Submit Data</a></li>";
+					hyp_data += "<ul id='nav_links'><li><a href='/'>THIS IS US</a></li><li>|</li><li><a href='hypothesis'>Student Hypotheses</a></li><li><a href='whatWeEat'>What We Eat</a></li><li><a href='communityMap'>Community Mapping</a></li><li><a href='studentProjs'>Student Projects</a></li><li><a href='submit'>Submit Data</a></li>";
 					hyp_data += "</ul></div><h1>Student Hypotheses</h1><div class='info'>";	
 					for (var count = items.length - 1; count >= 0; count--) {
 						hyp_data += "<h4>Student: " + items[count].student + "</h4>" +
