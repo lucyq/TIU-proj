@@ -13,11 +13,11 @@
 
 		<div class="forms">
 			<div id="hypo">
-			<h3>Submit a hypothesis</h3>
+			<h2 style="text-align: left">Submit a hypothesis</h2>
 				<form method="post" action="/submit_hypothesis">
 					Name:<br> <input class="textbox" id="student_name"type="text" name="student_name"/><br><br>
 					Hypothesis:<br> <input class="textbox" type="text" name="hypothesis" size="50"/><br><br>
-					<input type="submit" value="Submit"/>
+					<input type="submit" value="Submit"/><br><br>
 				</form>
 				
 
@@ -25,22 +25,45 @@
 
 
 			<div id="community_map">
-			<h3>Submit a new food resource</h3>
+			<h2 style="text-align: left">Submit a new food resource</h2>
 				<form action="/submit_location" method="post">
 					Name:<br> <input type="text" class="textbox" name="name"/><br><br>
 					Name of location:<br> <input class="textbox" type="text" name="location_name"/><br><br>
 					Address of location:<br> <input type="text" class="textbox"  size="50" name="location_address"/><br><br>
-					Type of food resource: <br>
-					<input type="radio" name="location_type" value="restaurant"> Restaurant</input><br>
-					<input type="radio" name="location_type" value="grocery_store"> Grocery Store</input><br>
-					<input type="radio" name="location_type" value="food_truck"> Food Truck</input>
+					Type of food resource: <br><br>
+					<input type="radio" name="location_type" value="cafeteria">  Cafeteria</input><br>
+					<input type="radio" name="location_type" value="cafeteria">  Convenience Store</input><br>
+					<input type="radio" name="location_type" value="farmers_market">  Farmer's Market</input><br>	
+					<input type="radio" name="location_type" value="fast_food">  Fast Food</input><br>
+					<input type="radio" name="location_type" value="garden">  Garden/Farm</input><br>
+					<input type="radio" name="location_type" value="grocery_store">  Grocery Store</input><br>
+					<input type="radio" name="location_type" value="liquor_store">  Liquor Store</input><br>
+					<input type="radio" name="location_type" value="restaurant">  Restaurant</input><br>
+					<input type="radio" name="location_type" value="vending_machine">  Vending Machine</input>
 					<br><br>
-					<input type="submit" value="Submit"/>
+					<input type="submit" value="Submit"/><br><br>
 				</form>
 
 			</div>
 
-			<div id="student_projs"></div>
-		</div>
+		
+		
+			<div id="projs">
+				<h2 style="text-align: left">Submit a project</h2>
+					<form method="post" action="/submit_projects">
+						Name:<br> <input class="textbox" id="student_name"type="text" name="student_name"/><br><br>
+						Project Name:<br> <input class="textbox" id="proj_name"type="text" name="proj_name"/><br><br>
+						Prezi Link:<br> <input class="textbox" type="text" name="prezi_link" size="50"/><br><br>
+						Project Description:<br> <input class="textbox" id="proj_desc"type="text" name="proj_desc" size="50"/><br><br>
+						Phase Number:<br><input type="radio" name="phase_num" value="1"> 1 </input>
+						<input type="radio" name="phase_num" value="2"> 2 </input>
+						<input type="radio" name="phase_num" value="3"> 3</input><br><br>
+						<input type="submit" value="Submit"/><br>
+					</form>
+					</div>
+
+			</div>
+
+
 		
 	</div>

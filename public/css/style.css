@@ -3,6 +3,8 @@
 
 body {
 	background-image: url('../images/beige-fabric.jpg');
+	background-image: url('../images/retina_wood.png');
+
 	background-size: 800px 600px;
 
 	margin-bottom: 40px;
@@ -14,8 +16,10 @@ body {
 
 p {
 	font-family: 'Source Sans Pro';
-	font-size: 16px;
+	font-size: 15px;
 	color: rgb(100, 100, 100);
+	color: rgb(255,255,214);
+	color: #FFFFFF;
 }
 
 a {
@@ -23,8 +27,11 @@ a {
 }
 
 a:hover {
-	color: rgb(181, 208, 186); /* faded green */
-	color: rgb(181, 204, 208); /* light blue */
+/*	color: rgb(181, 208, 186); 
+	color: rgb(181, 204, 208); 
+*/	
+color: #FFFFFF;
+background-color: rgba(250,230,178,0.5);
 }
 
 @font-face {
@@ -43,6 +50,14 @@ a:hover {
 
 #nav {
 	background-color: rgba(100,100,100,0.7);
+	background-color: rgba(51, 102, 102, 0.6);
+	background-color: rgba(102, 125, 149, 0.6);
+	background-color: rgba(125,151,144,0.7);
+	background-color: rgba(132,174,188,0.7);
+	background-color: rgba(116,151,164,0.7);	
+	background-color: rgba(102, 125, 149, 0.5); /* steel blue */
+		background-color: rgba(255, 170, 58, 0.4);
+	background-color: rgba(255,0,0,0.4);
 	font-family: 'Lato';
 	font-size: 16px;
 	padding: 3px;
@@ -63,15 +78,15 @@ h1 {
 	font-family: titleFont;
 	font-size: 120px;
 	color: #FFFFFF;
+
+
 	text-align: center;
 }
 
 h2 {
-	font-family: 'Lato';
-
-	color: rgb(204, 102, 102); /* coral */
+	font-family: 'subtitleFont';
 	color: #FFFFFF;
-	font-size: 28px;
+	font-size: 40px;
 	text-align: center;
 }
 
@@ -88,10 +103,17 @@ h4 {
 	font-size: 18px;
 	text-align: left;
 	color: rgb(60,60,60);
+	color: #FFFFFF;
 }
 
 .info {
 	background-color: rgba(139, 108, 148, 0.2);
+	background-color: rgba(108, 149, 155, 0.2);
+	background-color: rgba(66, 124, 68, 0.3);
+	background-color: rgba(102, 125, 149, 0.5);
+	background-color: rgba(116,151,164,0.5);
+	
+	
 	margin-right: 80px;
 	margin-left: 80px;
 	padding: 10px;
@@ -152,7 +174,8 @@ canvas {
 .forms {
 	font-family: "Source Sans Pro";
 	font-size: 16px;
-	color: #000000;
+	color: rgb(100,100,100);
+	color: #FFFFFF;
 }
 
 .textbox { 
