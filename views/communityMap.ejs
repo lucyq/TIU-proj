@@ -3,6 +3,7 @@
 
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true"></script>
 	<script src="../js/mapView.js"></script>
+  <script src="Processing.js/processing.js"></script>
 </head>
 
 <body onload="init()">
@@ -14,6 +15,7 @@
   	
       <div id="viz">
         <h3>Visualization</h3>
+        <canvas data-processing-sources="../js/map_chart.pde"></canvas>
       </div>
   		<div id="desc">
 			<h3>Filter by</h3>

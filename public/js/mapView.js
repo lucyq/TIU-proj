@@ -41,6 +41,7 @@ function renderMarkers() {
 	for (k in data) {
 		var address = data[k]["location_address"];
 		var location_name = data[k]["location_name"];
+						console.log(location_name);
 		geocoder.geocode({'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var pos = results[0].geometry.location;
@@ -52,7 +53,7 @@ function renderMarkers() {
 				});
 
 
-				console.log(location_name);
+
 
 				var contentString = "<div class='infoDiv'><h4>" + location_name + "</h4><p>" + address + "</p></div>";
 				
