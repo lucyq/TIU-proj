@@ -1,4 +1,4 @@
-/* G L O B A L   V A R I A B L E S */
+
 var BLS;
 var BLS_lat = 42.3380;
 var BLS_long = -71.1020;
@@ -51,8 +51,6 @@ function renderMarkers() {
 					icon: '../images/marker.png',
 					position: pos
 				});
-
-
 
 
 				var contentString = "<div class='infoDiv'><h4>" + location_name + "</h4><p>" + address + "</p></div>";

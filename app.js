@@ -1,3 +1,8 @@
+
+// - - - - - - - - - - - - - - //
+//   D E P E N D E N C I E S   //
+// - - - - - - - - - - - - - - //
+
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -6,6 +11,10 @@ var cookieParser = require('cookie-parser');
 var mongo = require('mongodb');
 var app = express();
 
+
+// - - - - - - - - - - - - - - - //
+//   C O N F I G U R A T I O N   //
+// - - - - - - - - - - - - - - - //
 
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
@@ -20,19 +29,15 @@ var mongoUri = process.env.MONGOLAB_URI ||
 
 var ObjectId = require('mongodb').ObjectID;
 
-
-// app.all('*', function(req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type');
-//   next();
-// });
-
-
 app.use(express.static(path.join(__dirname, 'bower_components'))); 
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+// - - - - - - - - //
+//   R O U T E S   //
+// - - - - - - - - //
+
+// Static Pages
 app.get('/', function (req, res) {
 	res.render('index');
 });
@@ -51,13 +56,8 @@ app.get('/studentProjs', function (req, res) {
 app.get('/submit', function (req, res) {
 	res.render('submit');
 });
-// app.get('/hypothesis', function (req, res) {
-// 	res.render('hypothesis');
-// });
 
-
-
-// submitting data
+// Data Submission
 app.post("/submit_hypothesis", function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		if (err) {
@@ -80,16 +80,13 @@ app.post("/submit_hypothesis", function(req, res, next) {
 					} else {
 						col.insert({'student':student, 'hypothesis':hypothesis}, function(err, items) {
 							res.redirect('hypothesis');
-						});
-						
+						});		
 					}
 				});
 			}
 		});
 	});
 });
-
-
 
 app.post("/submit_location", function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
@@ -122,7 +119,7 @@ app.post("/submit_location", function(req, res, next) {
 	});
 });
 
-
+// Data Retrieval
 app.get('/location_data', function (req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		db.collection('TIU_locations', function(err, col){
@@ -134,8 +131,6 @@ app.get('/location_data', function (req, res, next) {
 		});
 	});
 });
-
-
 
 app.get('/hypothesis', function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
@@ -154,11 +149,15 @@ app.get('/hypothesis', function(req, res, next) {
 					hyp_data += "</div></div></body>";
 				res.send(hyp_data);
 				}
-				// res.send(items);
 			});
 		});
 	});
 });
+
+
+// - - - - - - - - //
+//   S E R V E R   //
+// - - - - - - - - //
 
 var port = process.env.PORT || 5000;
 

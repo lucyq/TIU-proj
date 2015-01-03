@@ -15,13 +15,11 @@
 			<div id="hypo">
 			<h3>Submit a hypothesis</h3>
 				<form method="post" action="/submit_hypothesis">
-					Name: <input id="student_name"type="text" size="50" name="student_name"/><br><br>
-					Hypothesis: <input type="text" name="hypothesis"/><br><br>
+					Name:<br> <input class="textbox" id="student_name"type="text" name="student_name"/><br><br>
+					Hypothesis:<br> <input class="textbox" type="text" name="hypothesis" size="50"/><br><br>
 					<input type="submit" value="Submit"/>
 				</form>
-				<!--  $.post("http://fathomless-reef-4406.herokuapp.com/submit.json", 
-    {"username": "</td></tr></div></table>", "score": 99999, "grid": JSON.stringify(this.grid)});
--->
+				
 
 			</div>
 
@@ -29,12 +27,12 @@
 			<div id="community_map">
 			<h3>Submit a new food resource</h3>
 				<form action="/submit_location" method="post">
-					Name: <input type="text" size="50" name="name"/><br><br>
-					Name of location: <input size="50" type="text" name="location_name"/><br><br>
-					Address of location: <input type="text" size="100" name="location_address"/><br><br>
+					Name:<br> <input type="text" class="textbox" name="name"/><br><br>
+					Name of location:<br> <input class="textbox" type="text" name="location_name"/><br><br>
+					Address of location:<br> <input type="text" class="textbox"  size="50" name="location_address"/><br><br>
 					Type of food resource: <br>
-					<input type="radio" name="location_type" value="restaurant"> Restaurant</input>
-					<input type="radio" name="location_type" value="grocery_store"> Grocery Store</input>
+					<input type="radio" name="location_type" value="restaurant"> Restaurant</input><br>
+					<input type="radio" name="location_type" value="grocery_store"> Grocery Store</input><br>
 					<input type="radio" name="location_type" value="food_truck"> Food Truck</input>
 					<br><br>
 					<input type="submit" value="Submit"/>
