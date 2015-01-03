@@ -42,6 +42,7 @@ function renderMarkers() {
 
 	for (k in data) {
 		var address = data[k]["location_address"];
+		var location_name = data[k]["location_name"];
 		geocoder.geocode({'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var pos = results[0].geometry.location;
@@ -56,7 +57,7 @@ function renderMarkers() {
 
 				var infoList = document.createElement("ul");
 				infoList.id = "infoDiv";
-				infoList.innerHTML = data[k]["location_name"];
+				infoList.innerHTML = location_name;
 
 				google.maps.event.addListener(marker, 'click', (function(infoList) {
 					return function() {
