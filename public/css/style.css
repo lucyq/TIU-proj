@@ -103,6 +103,8 @@ h4 {
 
 .info {
 	background-color: rgba(116,151,164,0.6);
+	background-color: rgba(78,154,182,0.4);
+	
 
 	
 	margin-right: 80px;
@@ -146,7 +148,8 @@ html {
 	width: 60%;
 	height: 400px;
 	background-color: rgba(139, 108, 148, 0.2);
-		background-color: rgba(116,151,164,0.5);
+	background-color: rgba(116,151,164,0.5);
+
 
 	left: 20px;
 	float: left;
@@ -199,4 +202,47 @@ input {
     -webkit-box-shadow: 0px 0px 8px #7bc1f7; 
 } 
 
+
+/* FOOTER */
+.footer_links {
+  text-align: center;
+  font-size: 30px;
+}
+
+ #wrap {
+    padding-top: 100px;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -3%;
+  }
+
+
+#push,
+#footer {
+  height: 150px;
+  font-family: subtitleFont;
+}
+#footer {
+  background-color: rgba(145,202,202,0.5);
+  background-color: rgba(107,162,153,0.5);
+  background-color: rgba(78,182,175,0.4);
+  background-color: rgba(255,172,77,0.5);
+}
+
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 20px; 
+  }
+}
+
+.footer-text {
+	font-size: 12px;
+	padding-right: 30px;
+	padding-right: 30px;
+
+}
 
