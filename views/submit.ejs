@@ -22,13 +22,13 @@
 		<div class="forms">
 			<div id="community_map">
 			<h2 style="text-align: left">Submit a new food resource</h2>
-			<!-- 	<form action="/submit_location" method="post"> -->
+				<form action="/submit_location" method="post"> 
 					Name:<br> <input type="text" class="textbox" id="student_name" name="name"/><br><br>
 					Name of location:<br> <input class="textbox" id="location_name" type="text" name="location_name"/><br><br>
 					Address of location:<br> <input type="text" id="location_address" class="textbox"  size="50" name="location_address"/><br><br>
 					Type of food resource: <br><br>
 					<input type="radio" name="location_type" value="cafeteria">  Cafeteria</input><br>
-					<input type="radio" name="location_type" value="cafeteria">  Convenience Store</input><br>
+					<input type="radio" name="location_type" value="convenience_store">  Convenience Store</input><br>
 					<input type="radio" name="location_type" value="farmers_market">  Farmer's Market</input><br>	
 					<input type="radio" name="location_type" value="fast_food">  Fast Food</input><br>
 					<input type="radio" name="location_type" value="garden">  Garden/Farm</input><br>
@@ -37,8 +37,57 @@
 					<input type="radio" name="location_type" value="restaurant">  Restaurant</input><br>
 					<input type="radio" name="location_type" value="vending_machine">  Vending Machine</input>
 					<br><br>
+
+					<!--neighborhoods-->
+					<select name="select_neighborhoods">
+					 	<option id="base"> Please select a neighborhood </option>
+						<optgroup label="Boston">
+							<option class="location_neighborhood" value="Charlestown"> Charlestown </option>
+							<option class="location_neighborhood" value="Beacon Hill/Back bay"> Beacon Hill/Back bay </option>
+							<option class="location_neighborhood" value="Downtown/Chinatown/Bay Village"> Downtown/Chinatown/Bay Village </option>
+							<option class="location_neighborhood" value="South End"> South End </option>
+							<option class="location_neighborhood" value="South Boston/Waterfront"> South Boston/Waterfront </option>
+							<option class="location_neighborhood" value="Fenway/Kenmore/Mission Hill"> Fenway/Kenmore/Mission Hill </option>
+							<option class="location_neighborhood" value="West End/North End"> West End/North End </option>
+							<option class="location_neighborhood" value="Allston/Brighton"> Allston/Brighton</option>
+							<option class="location_neighborhood" value="Roxbury"> Roxbury </option>
+							<option class="location_neighborhood" value="Dorchester"> Dorchester </option>
+							<option class="location_neighborhood" value="Jamaica Plain"> Jamaica Plain </option>
+							<option class="location_neighborhood" value="West Roxbury"> West Roxbury </option>
+							<option class="location_neighborhood" value="Roslindale"> Roslindale </option>
+							<option class="location_neighborhood" value="Mattapan"> Mattapan </option>
+							<option class="location_neighborhood" value="Hyde Park"> Hyde Park </option>
+						</optgroup>
+						<optgroup label="North/East of Boston">
+							<option class="location_neighborhood" value="Revere"> Revere </option>
+							<option class="location_neighborhood" value="Winthrop"> Winthrop </option>
+							<option class="location_neighborhood" value="Chelsea"> Chelsea </option>
+							<option class="location_neighborhood" value="Everett"> Everett </option>
+							<option class="location_neighborhood" value="Malden"> Malden </option>
+							<option class="location_neighborhood" value="Medford"> Medford </option>
+						</optgroup>
+						<optgroup label="North/West of Boston">
+							<option class="location_neighborhood" value="Arlington"> Arlington </option>
+							<option class="location_neighborhood" value="Somerville"> Somerville </option>
+							<option class="location_neighborhood" value="Cambridge"> Cambridge </option>
+							<option class="location_neighborhood" value="Belmont"> Belmont </option>
+							<option class="location_neighborhood" value="Watertown"> Watertown </option>
+						</optgroup>
+						<optgroup label="West of Boston">
+							<option class="location_neighborhood" value="Waltham"> Waltham </option>
+							<option class="location_neighborhood" value="Newton"> Newton </option>
+							<option class="location_neighborhood" value="Brookline"> Brookline </option>
+							<option class="location_neighborhood" value="Needham"> Needham </option>
+							<option class="location_neighborhood" value="Dedham"> Dedham </option>
+						</optgroup>
+						<optgroup label="South of Boston">
+							<option class="location_neighborhood" value="Milton"> Milton </option>
+							<option class="location_neighborhood" value="Quincy"> Quincy </option>
+							<option class="location_neighborhood" value="Braintree"> Braintree </option>
+						</optgroup>
+					</select><br><br>
 					<input type="submit" onclick="codeAddress()" value="Submit"/><br><br>
-				<!-- </form> -->
+				</form>
 			</div>
 		</div>
 	</div>

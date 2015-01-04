@@ -202,6 +202,15 @@ input {
     -webkit-box-shadow: 0px 0px 8px #7bc1f7; 
 } 
 
+    select optgroup{
+    background:#FFF;
+    color:#000;
+    font-style:normal;
+    font-weight:normal;
+    }
+
+
+
 
 /* FOOTER */
 .footer_links {
@@ -245,4 +254,5 @@ input {
 	padding-right: 30px;
 
 }
+
 

@@ -101,9 +101,10 @@ app.post("/submit_location", function(req, res, next) {
 			var location_name = req.body.location_name;
 			var location_address = req.body.location_address;
 			var location_type = req.body.location_type;
+			var location_neighborhood = req.body.location_neighborhood;
 			
 			if (student == null || location_name == null || 
-				location_address == null || location_type == null ||
+				location_address == null || location_type == null || location_neighborhood == null || 
 				student == "" || location_name == "" || 
 				location_address == "" || location_type == "") {
 				res.send("Missing Fields!");
