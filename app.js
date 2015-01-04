@@ -42,6 +42,10 @@ app.get('/', function (req, res) {
 	res.render('index');
 });
 
+app.get('/about', function (req, res) {
+	res.render('about');
+});
+
 app.get('/whatWeEat', function (req, res) {
 	res.render('whatWeEat');
 });
@@ -53,6 +57,7 @@ app.get('/communityMap', function (req, res) {
 app.get('/studentProjs', function (req, res) {
 	res.render('studentProjs');
 });
+
 app.get('/submit', function (req, res) {
 	res.render('submit');
 });

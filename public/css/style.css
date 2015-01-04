@@ -41,9 +41,13 @@ background-color: rgba(250,230,178,0.5);
 	font-family: subtitleFont;
 	/*src: url(../fonts/doodle.ttf);*/
 	src: url(../fonts/ostrich-light.ttf);
-
-	
 }
+
+@font-face{
+	font-family: subtitleBoldFont;
+	src: url(../fonts/ostrich-rounded.ttf);
+}
+
 
 #nav {
 	background-color: rgba(102, 125, 149, 0.5); /* steel blue */
