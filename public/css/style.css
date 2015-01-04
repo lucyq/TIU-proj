@@ -46,18 +46,12 @@ background-color: rgba(250,230,178,0.5);
 }
 
 #nav {
-	background-color: rgba(100,100,100,0.7);
-	background-color: rgba(51, 102, 102, 0.6);
-	background-color: rgba(102, 125, 149, 0.6);
-	background-color: rgba(125,151,144,0.7);
-	background-color: rgba(132,174,188,0.7);
-	background-color: rgba(116,151,164,0.7);	
 	background-color: rgba(102, 125, 149, 0.5); /* steel blue */
-		background-color: rgba(255, 170, 58, 0.4);
+	background-color: rgba(255, 170, 58, 0.4);
 	background-color: rgba(255,0,0,0.45);
 	font-family: 'Lato';
-	font-size: 16px;
-	padding: 3px;
+	font-size: 18px;
+	padding: 10px;
 
 }
 ul {
@@ -108,16 +102,12 @@ h4 {
 
 
 .info {
-	background-color: rgba(139, 108, 148, 0.2);
-	background-color: rgba(108, 149, 155, 0.2);
-	background-color: rgba(66, 124, 68, 0.3);
-	background-color: rgba(102, 125, 149, 0.5);
 	background-color: rgba(116,151,164,0.6);
 
 	
 	margin-right: 80px;
 	margin-left: 80px;
-	padding: 10px;
+	padding: 5px;
 	padding-left: 30px;
 	padding-right: 30px;
 

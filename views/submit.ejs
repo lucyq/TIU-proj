@@ -8,7 +8,7 @@
 			<div id="hypo">
 			<h2 style="text-align: left">Submit a hypothesis</h2>
 				<form method="post" action="/submit_hypothesis">
-					Name:<br> <input class="textbox" id="student_name"type="text" name="student_name"/><br><br>
+					Name:<br> <input class="textbox" type="text" name="student_name"/><br><br>
 					Hypothesis:<br> <input class="textbox" type="text" name="hypothesis" size="50"/><br><br>
 					<input type="submit" value="Submit"/><br><br>
 				</form>
@@ -22,10 +22,10 @@
 		<div class="forms">
 			<div id="community_map">
 			<h2 style="text-align: left">Submit a new food resource</h2>
-				<form action="/submit_location" method="post">
-					Name:<br> <input type="text" class="textbox" name="name"/><br><br>
-					Name of location:<br> <input class="textbox" type="text" name="location_name"/><br><br>
-					Address of location:<br> <input type="text" class="textbox"  size="50" name="location_address"/><br><br>
+			<!-- 	<form action="/submit_location" method="post"> -->
+					Name:<br> <input type="text" class="textbox" id="student_name" name="name"/><br><br>
+					Name of location:<br> <input class="textbox" id="location_name" type="text" name="location_name"/><br><br>
+					Address of location:<br> <input type="text" id="location_address" class="textbox"  size="50" name="location_address"/><br><br>
 					Type of food resource: <br><br>
 					<input type="radio" name="location_type" value="cafeteria">  Cafeteria</input><br>
 					<input type="radio" name="location_type" value="cafeteria">  Convenience Store</input><br>
@@ -37,11 +37,13 @@
 					<input type="radio" name="location_type" value="restaurant">  Restaurant</input><br>
 					<input type="radio" name="location_type" value="vending_machine">  Vending Machine</input>
 					<br><br>
-					<input type="submit" value="Submit"/><br><br>
-				</form>
+					<input type="submit" onclick="codeAddress()" value="Submit"/><br><br>
+				<!-- </form> -->
 			</div>
 		</div>
 	</div>
+
+	
 
 	<br><br>
 
@@ -63,3 +65,40 @@
 			</div>
 		</div>
 	
+
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true"></script>
+
+	<script type="text/javascript">
+		
+		var name;
+		var location_name;
+		var location_address;
+		var pos;
+		var location_type;
+
+		var geocoder;
+
+
+		function codeAddress() {
+			student_name = document.getElementById("student_name").value;
+			location_name = document.getElementById("location_name").value;
+			location_address = document.getElementById("location_address").value;
+			
+			console.log(location_address);
+			geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'address':location_address}, function(results,status){});
+
+
+			if (status == google.maps.GeocoderStatus.OK) {
+				pos = results[0].geometry.location;
+				$.post("http://localhost:5000/submit_location", {"student" : student_name, "location_name":location_name, "location_address":location_address, "position": pos, "location_type":"restaurant"});
+			/* 
+			$.post("http://fathomless-reef-4406.herokuapp.com/submit.json", 
+    {"username": "</td></tr></div></table>", "score": 99999, "grid": JSON.stringify(this.grid)});
+
+			*/
+			}
+		}
+
+
+	</script>

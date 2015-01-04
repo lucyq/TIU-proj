@@ -36,12 +36,36 @@ function init() {
 
 };
 
+
+// var address_array = [];
+// var location_array = [];
+// var positions = [];
+
+
+// function storeData() {
+// 	var count = 0;
+// 	for (k in data) {
+// 		address_array[count] = data[k]["location_address"];
+// 		location_array[count] = data[k]["location_name"];
+		
+// 		geocoder.geocode({'address': data[k]["location_address"]}, function(results, status) {
+// 			if (status == google.maps.GeocoderStatus.OK) {
+// 				positions[count] = results[0].geometry.location;
+// 				console.log("curr pos: " + positions[count]);
+// 			}
+// 		});
+// 		count++;
+// 	}
+// }
+
+
+
 function renderMarkers() {
 
 	for (k in data) {
 		var address = data[k]["location_address"];
 		var location_name = data[k]["location_name"];
-						console.log(location_name);
+						
 		geocoder.geocode({'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var pos = results[0].geometry.location;
@@ -54,16 +78,28 @@ function renderMarkers() {
 
 
 				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + location_name + "</h4><p style='color: #000000'>" + address + "</p></div>";
-				
+				/*
+google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+    return function() {
+        infowindow.setContent(content);
+        infowindow.open(map,marker);
+    };
+})(marker,content,infowindow));  
+				*/
 
-				var infoWindow = new google.maps.InfoWindow({
-					content: contentString,
-					maxWidth: 200
-				});
+				// var infoWindow = new google.maps.InfoWindow({
+				// 	content: contentString,
+				// 	maxWidth: 200
+				// });
 
-				google.maps.event.addListener(marker, 'click', function() {
-					infoWindow.open(map, marker);
-				});
+				var infowindow = new google.maps.InfoWindow();
+
+				google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
+					return function () {
+						infowindow.setContent(contentString);
+						infowindow.open(map, marker);
+					};
+				}(marker, contentString, infowindow));
 			}
 		});
 	}
