@@ -53,7 +53,7 @@ function renderMarkers() {
 				});
 
 
-				var contentString = "<div class='infoDiv'><h4>" + location_name + "</h4><p>" + address + "</p></div>";
+				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + location_name + "</h4><p style='color: #000000'>" + address + "</p></div>";
 				
 
 				var infoWindow = new google.maps.InfoWindow({
