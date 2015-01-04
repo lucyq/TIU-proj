@@ -114,7 +114,7 @@ app.post("/submit_location", function(req, res, next) {
 			} else {
 				col.find({'student':student}).toArray(function(err, items){
 					col.insert({'student':student, 'location_name':location_name, 
-								'location_address':location_address, 'location_type':location_type}, function(err, items) {
+								'location_address':location_address, 'location_type':location_type, 'location_neighborhood':location_neighborhood}, function(err, items) {
 						res.redirect('communityMap');
 					});
 				});
