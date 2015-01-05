@@ -1,9 +1,15 @@
+// TODO: 
+// -render marker color by type 
+// -fix infowindow location_name
+// -fix infowindow open/close
 
 var BLS;
 var BLS_lat = 42.3380;
 var BLS_long = -71.1020;
 
+
 var geocoder;
+var service;
 var map;
 
 
@@ -17,6 +23,8 @@ var mapOptions = {
 function init() {
 
 	geocoder = new google.maps.Geocoder();
+	// service = new google.maps.places.PlacesService(map);
+
 	BLS = new google.maps.LatLng(BLS_lat, BLS_long);
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
@@ -69,14 +77,14 @@ function renderMarkers() {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var pos = results[0].geometry.location;
 			
+				console.log("YO>");
 				var marker = new google.maps.Marker({
 					map: map,
 					icon: '../images/marker.png',
 					position: pos
 				});
 
-
-				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + location_name + "</h4><p style='color: #000000'>" + address + "</p></div>";
+				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + results[0].formatted_address + "</p></div>";
 				/*
 google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
     return function() {

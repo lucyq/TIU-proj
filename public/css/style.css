@@ -10,6 +10,9 @@ body {
 	background-size: 800px 600px;
 
 }
+img {
+	border-radius: 10px;
+}
 
 
 p {
@@ -61,7 +64,13 @@ a:visited {
 	padding: 10px;
 
 }
-
+.module_link {
+	margin: 5px;
+	padding: 15px;
+	font-family: subtitleFont;
+	font-size: 30px;
+	background-color: rgba(140,140,140,0.4);
+}
 /*
 .nav_link:hover {
 	color: #FFFFFF;
@@ -118,10 +127,7 @@ h4 {
 
 
 .info {
-	background-color: rgba(116,151,164,0.6);
 	background-color: rgba(78,154,182,0.4);
-	
-
 	
 	margin-right: 80px;
 	margin-left: 80px;
