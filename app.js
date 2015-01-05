@@ -62,7 +62,40 @@ app.get('/submit', function (req, res) {
 	res.render('submit');
 });
 
+
+
+app.get('/manageClasses', function (req, res) {
+	res.render('manageClasses');
+});
+
 // Data Submission
+app.post("/addNewClass", function(req, res, next){
+	mongo.Db.connect(mongoUri, function(err, db) {
+		if (err) {
+			res.send("Error connecting to database!");
+		}
+		db.collection('TIU_classes', function(err, col) {
+			if (err) {
+				res.send("Database Error!");
+			}
+			var instructor = req.body.instructor_name;
+			var class_name = req.body.class_name;
+			var school = req.body.school_name;
+
+			if (instructor == null || school == null || class_name == null ||
+				instructor == "" || school == "" || class_name == "") {
+				res.send("Missing Fields!");
+			} else {
+				col.insert({'instructor':instructor, 'school':school, 'class_name':class_name}, function(err, items) {
+					res.redirect('/manageClasses');
+				});		
+			}
+		});
+	});
+});
+
+
+
 app.post("/submit_hypothesis", function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		if (err) {
