@@ -32,6 +32,10 @@ color: #FFFFFF;
 background-color: rgba(250,230,178,0.5);
 }
 
+a:visited {
+	color: #FFF;
+}
+
 @font-face {
 	font-family: titleFont;
 	src: url(../fonts/Ostrich.otf); 
@@ -58,12 +62,12 @@ background-color: rgba(250,230,178,0.5);
 
 }
 
-
+/*
 .nav_link:hover {
 	color: #FFFFFF;
 	background-color: rgba(250,230,178,0.5);
 
-}
+}*/
 
 
 ul {

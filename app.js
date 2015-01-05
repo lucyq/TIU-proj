@@ -9,6 +9,13 @@ var bodyParser = require('body-parser');
 var engine = require('ejs-locals');
 var cookieParser = require('cookie-parser');
 var mongo = require('mongodb');
+
+
+var passport = require('passport');
+var passportLocal = require('passport-local');
+var passportHttp = require('passport-http');
+var crypto = require('crypto');
+
 var app = express();
 
 
@@ -23,55 +30,209 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());﻿
 app.use(cookieParser());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 var mongoUri = process.env.MONGOLAB_URI ||
   				process.env.MONGOHQ_URL || 
   				'mongodb://localhost/mydb';
 
 var ObjectId = require('mongodb').ObjectID;
 
+
+function verifyCredentials(username, password, done) {
+	mongo.Db.connect(mongoUri, function(err, db) {
+		db.collection('TIU_users', function(err, collection) {
+			if (username == null || password == null || username == "" || password == "") {
+				done(err,null);
+			} else {
+				collection.find({'username':username}).toArray(function(err, items){
+					if (items.length == 0) {
+						done(null,null);
+					} else {
+						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
+							done(null, JSON.stringify(items[0]));
+						} else {
+							done(null,null);
+						}
+					}
+				});
+			}
+		});
+	});
+	// // Pretend this is using a real database
+	// if (username == password) {
+	// 	done(null, {id: username, name: username}); // user object with other info		
+	// } else {
+	// 	done(null,null); // no error but didn't authenticate correctly, validation failed
+	// }
+}
+
+passport.use(new passportLocal.Strategy(verifyCredentials));
+passport.use(new passportHttp.BasicStrategy(verifyCredentials));
+
+
+passport.serializeUser(function(user, done){
+	// would query database usually
+	done(null, user); // first arg is error
+}); // passport invokes functio nfor us
+
+passport.deserializeUser(function(id, done) {
+	// query databse here
+	done(null, user);
+});
+
+
+function ensureAuthorized(req, res, next) {
+	if(req.isAuthenticated()) {
+		next();
+	} else {
+		res.sendStatus(403);
+		//res.redirect('/login'); // not logged in, can't get api/data!
+	}
+}
+
+// - - - - - - - - - - - //
+//   R E S O U R C E S   //
+// - - - - - - - - - - - //
+
 app.use(express.static(path.join(__dirname, 'bower_components'))); 
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 
 
 // - - - - - - - - //
 //   R O U T E S   //
 // - - - - - - - - //
 
-// Static Pages
+// ACCOUNT MANAGEMENT
+app.post('/login', passport.authenticate('local'), function(req,res) {
+	res.redirect('/');
+});
+
+
+app.post('/create_account', function(req, res, next){
+	mongo.Db.connect(mongoUri, function (err,db){
+		db.collection('TIU_users', function(err, col) {
+			var username = req.body.username;
+			var password = req.body.password;
+			var full_name = req.body.full_name;
+			var ver_password = req.body.confirm_password;
+			var class_id = req.body.class_id;
+			var email = req.body.email;
+			var time = new Date();
+
+     		// if (username == null || password == null || ver_password == null || email == null || 
+     		// 	first_name == null || last_name == null || phone_num == null) {
+     		// 	res.send('Missing fields!');
+     		// } else if (password != ver_password){
+     		if (password != ver_password) {
+     			res.send("Passwords don't match!");
+     		} else {
+     			col.find({'username':username}).toArray(function(err, items) {
+     				if (items.length != 0) {
+     					res.send("Username has been taken!");
+     				} else {
+     					// sendgrid.send({
+     					// 	to: email,
+     					// 	from: "tiu.proj@gmail.com",
+     					// 	subject: "Welcome to HPRT Toolkit!",
+     					// 	text: "Hello " + full_name + ", welcome to HPRT Toolkit!"	
+     					// }, function(err, json) {
+     					// 	if (err) { return console.error(err); }
+     					// 	console.log(json);
+     					// });
+     					col.insert({'username':username,
+     								'password':crypto.createHash('md5').update(password).digest("hex"),
+     								'full_name': full_name,
+     								'email':email,
+     								'class_id':class_id,
+     								'created_at':time
+			     					}, {safe: true}, function(err, res) {
+			     						col.find({'username':username}).toArray(function(err, items) {
+			     							// TODO: what do i put here?
+			     						});
+
+     					});
+   						res.redirect("/");
+     				}
+     			});
+     		}
+		});
+	});
+  
+});
+
+app.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/');
+});
+
+
+// STATIC PAGES
 app.get('/', function (req, res) {
-	res.render('index');
+	res.render('index', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 app.get('/about', function (req, res) {
-	res.render('about');
+	res.render('about', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 app.get('/whatWeEat', function (req, res) {
-	res.render('whatWeEat');
+	res.render('whatWeEat', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 app.get('/communityMap', function (req, res) {
-	res.render('communityMap');
+	res.render('communityMap', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 app.get('/studentProjs', function (req, res) {
-	res.render('studentProjs');
+	res.render('studentProjs', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 app.get('/submit', function (req, res) {
-	res.render('submit');
+	res.render('submit', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 app.get('/viewClasses', function (req, res) {
-	res.render('viewClasses');
+	res.render('viewClasses', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
 
 app.get('/manageClasses', function (req, res) {
-	res.render('manageClasses');
+	res.render('manageClasses', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
 });
 
-// Data Submission
+
+// DATA SUBMISSION
 app.post("/addNewClass", function(req, res, next){
 	mongo.Db.connect(mongoUri, function(err, db) {
 		if (err) {
@@ -145,9 +306,6 @@ app.post("/submit_location", function(req, res, next) {
 			var location_address = req.body.location_address;
 			var location_type = req.body.location_type;
 			var location_neighborhood = req.body.location_neighborhood;
-			console.log(student);
-			console.log(location_neighborhood);
-			
 
 			if (student == null || location_name == null || 
 				location_address == null || location_type == null ||
@@ -166,7 +324,7 @@ app.post("/submit_location", function(req, res, next) {
 	});
 });
 
-// Data Retrieval
+// DATA RETRIEVAL
 app.get('/location_data', function (req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		db.collection('TIU_locations', function(err, col){
