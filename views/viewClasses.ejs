@@ -1,7 +1,12 @@
 <% layout('layout') -%>
 <style>
-	h3 {
-		text-align: left;
+
+	button {
+		font-family: 'Source Sans Pro';
+	}
+
+	p {
+		text-align: center;
 	}
 	
 
@@ -12,8 +17,29 @@
 	
 
 <div class="info">
+
+		<h2>View Modules from All Classes</h2>
+		<h3>
+		<div class="btn-group btn-group-justified" aria-label="..." role="group">
+			<div class="btn-group" role="group">
+				<a href="hypothesis"><button type="button" class="btn btn-default" style="padding: 10px;">Student Hypotheses</button></a>
+			</div>
+			<div class="btn-group" role="group">
+				<a href="whatWeEat"><button type="button" class="btn btn-default" style="padding: 10px;">What We Eat</button></a>
+			</div>
+			<div class="btn-group" role="group">
+				<a href="communityMap"><button type="button" class="btn btn-default" style="padding: 10px;">Community Map</button></a>
+			</div>
+			<div class="btn-group" role="group">
+				<a href="studentProjs"><button type="button" class="btn btn-default" style="padding: 10px;">Student Projects</button></a>
+			</div>
+		</div>
+		</h3>
+		<br><br>
+
+
 	<div id="class_list">
-		
+		<h2>View by Class</h2>
 	</div>
 <!-- 	<h2><a href="/manageClasses"></a></h2> -->
 </div>
@@ -23,15 +49,12 @@
 	var data;
 
 	function loadClasses() {
-		console.log("WHYY")
 		var request = new XMLHttpRequest(); 
 			request.open("GET", "/class_data", true);
 			request.send();
 			request.onreadystatechange = function() {
 				if (request.readyState==4 && request.status==200) {
-					
 					data = JSON.parse(request.responseText);
-					console.log(data);
 					renderList();
 				}
 		};
@@ -53,3 +76,4 @@
 	}
 
 </script>
+
