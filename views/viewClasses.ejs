@@ -4,5 +4,43 @@
 	
 
 <div class="info">
+	<div id="class_list">
+		
+	</div>
 <!-- 	<h2><a href="/manageClasses"></a></h2> -->
 </div>
+
+
+<script>
+	var data;
+
+	function loadClasses() {
+		var request = new XMLHttpRequest(); 
+			request.open("GET", "/class_data", true);
+			request.send();
+			request.onreadystatechange = function() {
+				if (request.readyState==4 && request.status==200) {
+					
+					data = JSON.parse(request.responseText);
+					
+					renderList();
+				}
+		};
+	}
+
+	function renderList() {
+
+		var school_name;
+		var location_name;
+		var instructor_name;
+
+		for (k in data) {
+			school_name = data[k]["school_name"];
+			location_name = data[k]["class_name"];
+			instructor_name = data[k]["instructor_name"];
+
+			$("#class_list").append("<h2>" + class_name + "</h2><br>" + location_name + ", " + instructor_name);
+		}
+	}
+
+</script>

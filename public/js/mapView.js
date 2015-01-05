@@ -21,8 +21,7 @@ function init() {
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 	var request = new XMLHttpRequest();
-		var data_link = "/location_data"; 
-		request.open("GET", data_link, true);
+		request.open("GET", "/location_data", true);
 		request.send();
 		request.onreadystatechange = function() {
 			if (request.readyState==4 && request.status==200) {

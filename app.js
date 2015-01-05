@@ -62,6 +62,9 @@ app.get('/submit', function (req, res) {
 	res.render('submit');
 });
 
+app.get('/viewClasses', function (req, res) {
+	res.render('viewClasses');
+});
 
 
 app.get('/manageClasses', function (req, res) {
