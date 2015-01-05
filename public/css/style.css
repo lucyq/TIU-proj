@@ -3,19 +3,12 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100);
 
 
-.nav_link:hover {
-	color: #FFFFFF;
-background-color: rgba(250,230,178,0.5);
-
-}
-
 body {
 	background-image: url('../images/beige-fabric.jpg');
 	background-image: url('../images/retina_wood.png');
 
 	background-size: 800px 600px;
 
-	margin-bottom: 40px;
 }
 
 
@@ -58,14 +51,21 @@ background-color: rgba(250,230,178,0.5);
 
 
 #nav {
-	background-color: rgba(102, 125, 149, 0.5); /* steel blue */
-	background-color: rgba(255, 170, 58, 0.4);
 	background-color: rgba(255,0,0,0.45);
 	font-family: 'subtitleFont';
 	font-size: 26px;
 	padding: 10px;
 
 }
+
+
+.nav_link:hover {
+	color: #FFFFFF;
+	background-color: rgba(250,230,178,0.5);
+
+}
+
+
 ul {
 	text-align: center;
 	color: #FFFFFF;
@@ -128,9 +128,6 @@ h4 {
 }
 
 /* Community Map needs */
-html {
-	height: 100%;
-}
 
 
 #map_canvas {
@@ -230,34 +227,35 @@ select optgroup{
 
  #wrap {
     padding-top: 100px;
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    /* Negative indent footer by it's height */
-    margin: 0 auto -3%;
+    min-height: 100px;
+
+    height: 100px;
+  
   }
 
 
 #push,
 #footer {
-  height: 150px;
+  height: 60px;
   font-family: subtitleFont;
+
 }
 #footer {
   background-color: rgba(145,202,202,0.5);
   background-color: rgba(107,162,153,0.5);
   background-color: rgba(78,182,175,0.4);
   background-color: rgba(255,172,77,0.5);
+  margin: 0px;
+  padding: 5px;
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
   #footer {
     margin-left: -20px;
     margin-right: -20px;
-    padding: 20px; 
   }
 }
-
+*/
 .footer-text {
 	font-size: 12px;
 	padding-right: 30px;
