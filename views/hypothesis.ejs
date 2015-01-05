@@ -1,0 +1,46 @@
+<% layout('layout') -%>
+
+
+<body onload="loadContent()">
+<h1>Student Hypotheses</h1>
+<div class="info">
+	<div id="hypothesis_list">
+		
+	</div>
+</div>
+
+
+
+<script>
+	var data;
+
+	function loadContent() {
+		console.log("WHAAT?")
+		var request = new XMLHttpRequest(); 
+			request.open("GET", "/hyp_data", true);
+			request.send();
+			request.onreadystatechange = function() {
+				if (request.readyState==4 && request.status==200) {
+					data = JSON.parse(request.responseText);
+					renderList();
+				}
+		};
+	}
+
+
+
+	function renderList() {
+
+		var student_name;
+		var hypothesis;
+		var date;
+
+		for (k in data) {
+			student_name = data[k]["student"];
+			hypothesis = data[k]["hypothesis"];
+
+			$("#hypothesis_list").append("<h4>Student:" + student_name + "</h4><p>" + hypothesis +"</p><br>");
+		}
+	}
+
+</script>
