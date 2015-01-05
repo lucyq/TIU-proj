@@ -177,6 +177,18 @@ app.get('/location_data', function (req, res, next) {
 	});
 });
 
+app.get('/class_data', function(req, res, next) {
+	mongo.Db.connect(mongoUri, function(err, db) {
+		db.collection('TIU_classes', function(err, col){
+			if (!err) {
+				col.find().toArray(function(err, items) {
+					res.send(items);
+				});
+			}
+		});
+	});
+});
+
 app.get('/hypothesis', function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		db.collection('TIU_submissions', function(err, col) {
