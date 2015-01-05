@@ -1,5 +1,13 @@
 <% layout('layout') -%>
+<style>
+	h3 {
+		text-align: left;
+	}
+	
 
+</style>
+
+<body onload="loadClasses()">
 <h1>Classes</h1>
 	
 
@@ -15,6 +23,7 @@
 	var data;
 
 	function loadClasses() {
+		console.log("WHYY")
 		var request = new XMLHttpRequest(); 
 			request.open("GET", "/class_data", true);
 			request.send();
@@ -22,7 +31,7 @@
 				if (request.readyState==4 && request.status==200) {
 					
 					data = JSON.parse(request.responseText);
-					
+					console.log(data);
 					renderList();
 				}
 		};
@@ -35,11 +44,11 @@
 		var instructor_name;
 
 		for (k in data) {
-			school_name = data[k]["school_name"];
-			location_name = data[k]["class_name"];
-			instructor_name = data[k]["instructor_name"];
+			school_name = data[k]["school"];
+			class_name = data[k]["class_name"];
+			instructor_name = data[k]["instructor"];
 
-			$("#class_list").append("<h2>" + class_name + "</h2><br>" + location_name + ", " + instructor_name);
+			$("#class_list").append("<h3>" + class_name + "</h3><p>" + school_name + ", " + instructor_name + "</p>");
 		}
 	}
 
