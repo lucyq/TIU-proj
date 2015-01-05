@@ -5,39 +5,84 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 	<!--FIXED STYLE SHEETS-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
 	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap-modal-bs3patch.css">
+	<link rel="stylesheet" href="css/bootstrap-modal.css">
 	<link rel="stylesheet" href="css/style.css">
 
 
-	<!--SCRIPTS-->
-	<script src="jquery/dist/jquery.js"></script>
-	<script src="bootstrap/dist/js/bootstrap.js"></script>
 
 	<!--FAVICON-->
 	<link rel="SHORTCUT ICON" href="images/tree_favicon.gif" type="image/x-icon" />
 	<link rel="ICON" href="images/tree_favicon.gif" type="image/ico" />
 
 
+	<!--SCRIPTS-->
+	<script src="jquery/dist/jquery.js"></script>
+	<script src="bootstrap/dist/js/bootstrap.js"></script>
+	<script src="js/bootstrap-modalmanager.js"></script>
+	<script src="js/bootstrap-modal.js"></script>
+
+	<script>$('body').modalmanager('loading');</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".toggle-modal").click(function(){
+			$("#login_modal").modal('toggle');
+		});
+	});
+</script>
+
 </head>
 
 <body>
+
 	<!--STATIC HEADER-->
 	<div>
 		<div id="nav">
 
-			<ul id="nav_links">
+			<ul>
 				<li><a href="/">This Is Us</a></li>
 				<li>|</li>
 				<li><a href="about">About</a></li>
-				<li><a href="viewClasses">View Classes</a></li>  
-				
-				<li><a href="submit">Submit Data</a></li>
-				
+				<li><a href="viewClasses">View Classes</a></li>
+
+			<!-- 	if authenticated   -->
+					<li class="nav_link active toggle-modal">Log In</li>
+					<li class="nav_link active">Create an Account</li>
+				<!-- else -->
+					<li><a href="submit">Submit Data</a></li>
 			</ul>
 		</div>
 		<%- body%>
+
 	</div>
 
+ <!-- Modals -->
+    <div id="login_modal" class="modal fade">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+          		<div class="modal-header">
+            		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            		<h4 class="modal-title">Log In</h4>
+        		</div>
+         		<div class="modal-body">
+         			<p style="text-align: left; color: #000;">Don't have an account? Create on <a style="color: #000;" href="">here</a></p>
+         			<form method="" post="">
+         			<label>Username</label><br>
+         			<input class="textbox" type="text" name="username"><br><br>
+         			
+         			<label>Password</label><br>
+         			<input class="textbox" type="password" name="username"><br><br>
+         			<input class="btn btn-default textbox" type="submit" value="Log In"/><br><br>
+         			</form>
+  		        </div>
+        	</div>
+    	</div>
+	</div>
 </body>
 
 
@@ -64,5 +109,10 @@
 </div>
 </div>
 </footer>
+
+
+
+
 </html>
+
 

@@ -84,12 +84,14 @@ app.post("/addNewClass", function(req, res, next){
 			var instructor = req.body.instructor_name;
 			var class_name = req.body.class_name;
 			var school = req.body.school_name;
+			var code = req.body.validation_code;
 
-			if (instructor == null || school == null || class_name == null ||
-				instructor == "" || school == "" || class_name == "") {
+			if (instructor == null || school == null || class_name == null || code == null ||
+				instructor == "" || school == "" || class_name == "" || code == "") {
 				res.send("Missing Fields!");
 			} else {
-				col.insert({'instructor':instructor, 'school':school, 'class_name':class_name}, function(err, items) {
+				// ADD HASHING TO CODE
+				col.insert({'instructor':instructor, 'school':school, 'class_name':class_name, 'validation_code':code}, function(err, items) {
 					res.redirect('/manageClasses');
 				});		
 			}

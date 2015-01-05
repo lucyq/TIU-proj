@@ -1,5 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200);
+
 @import url(http://fonts.googleapis.com/css?family=Lato:100);
+
+
+.nav_link:hover {
+	color: #FFFFFF;
+background-color: rgba(250,230,178,0.5);
+
+}
 
 body {
 	background-image: url('../images/beige-fabric.jpg');
@@ -206,14 +214,12 @@ input {
     -webkit-box-shadow: 0px 0px 8px #7bc1f7; 
 } 
 
-    select optgroup{
+select optgroup{
     background:#FFF;
     color:#000;
     font-style:normal;
     font-weight:normal;
-    }
-
-
+}
 
 
 /* FOOTER */
@@ -260,3 +266,24 @@ input {
 }
 
 
+/* Modal */
+label {
+	font-family: 'Source Sans Pro';
+}
+.modal-title {
+	font-family: subtitleBoldFont;
+	color: #000;
+}
+.in {
+background: rgba(100,100,100, 0.7);
+background-color: rgba(250,230,178,0.5);
+
+}
+
+.modal-content {
+  height: 100%;
+  width: 100%;
+
+
+  border-radius: 0;
+}
