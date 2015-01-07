@@ -22,13 +22,38 @@
 	<h2>People</h2>
 
 
-	<div>
-		<img class="headshot" src="../images/kim_wilson.jpg">
-		<h3 style="text-align: left">Kim Wilson</h3>
-		
-		<p>
-		Kim Wilson is on the faculty of the Fletcher School of Tufts University. She is also a development practitioner with years of experience working with organizations such as Catholic Relief Services, the World Bank, and various UN agencies.		</p>
-		<a href="mailto:Kimberley.Wilson@tufts.edu?subject=Hi Kim!">Contact Kim</a>
+	<div id="profiles">
+<!-- 		<div>
+			<img class="headshot" src="../images/kim_wilson.jpg">
+			<h3 style="text-align: left">Kim Wilson</h3>
+			
+			<p>
+			Kim Wilson is on the faculty of the Fletcher School of Tufts University. She is also a development practitioner with years of experience working with organizations such as Catholic Relief Services, the World Bank, and various UN agencies.		</p>
+			<a href="mailto:Kimberley.Wilson@tufts.edu?subject=Hi Kim!">Contact Kim</a>
+		</div>
 
+		<div>
+ -->
+		</div>
 	</div>
 </div>
+
+<script>
+
+	var people = [
+		{'name':'Kim Wilson', 'image':'../images/kim_wilson.jpg', 'role':' ', 'desc':'Kim Wilson is on the faculty of the Fletcher School of Tufts University. She is also a development practitioner with years of experience working with organizations such as Catholic Relief Services, the World Bank, and various UN agencies.', 'email':'Kimberley.Wilson@tufts.edu?subject=Hi Kim!'},
+
+		{'name':'Jeffrey Isen', 'image':'../images/jeff_isen.jpg', 'role':' ','desc':'coming soon', 'email':'lucyzqin@gmail.com?subject=Hi Lucy!'},
+
+		{'name':'Emily Scott', 'image':'../images/emily_scott.jpg', 'role':' ','desc':'coming soon', 'email':'lucyzqin@gmail.com?subject=Hi Lucy!'},
+
+		{'name':'Lucy Qin', 'image':'../images/lucy_qin.jpg', 'role':'Technical Lead','desc':'Lucy is a senior at Tufts University studying computer science and economics.', 'email':'lucyzqin@gmail.com?subject=Hi Lucy!'}
+
+	];
+
+	for (k in people) {
+		$("#profiles").append("<img class='headshot' src='" + people[k]["image"] + "'><h4 style='text-align: left'>" + people[k]["name"] + " | " + people[k]["role"] + "</h4><p>" + people[k]["desc"] + "</p><a href='mailto:" + people[k]["email"] + "?subject=Hi!'>Contact</a><br><br>");
+	}
+
+
+</script>

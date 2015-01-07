@@ -1,26 +1,47 @@
 <% layout('layout') -%>
+<head>
+<style>
+	.content_forms {
+		display: none;
+
+	}
+
+
+  .toggle_forms {
+    background-color: rgba(100,100,100,0.3);
+
+  }
+
+  .toggle_forms:hover {
+    background-color: rgba(250,230,178,0.5);
+  }
+
+
+</style>
+</head>
+
 
 <h1>Submit Data</h1>
 
-
 	<div class="info">
-		<div class="forms">
-			<div id="hypo">
-			<h2 style="text-align: left">Submit a hypothesis</h2>
+		<br><h2>
+			<span class="toggle_forms" divId="hypothesis">Student Hypotheses</span>
+			<span class="toggle_forms" divId="communityMap">What We Eat</span>
+			<span class="toggle_forms" divId="studentProjs">Student Projects</span>
+		</h2>
+
+		<div class="forms content_forms" id="hypothesis">
+				<h2 style="text-align: left">Submit a hypothesis</h2>
+	
 				<form method="post" action="/submit_hypothesis">
 					Name:<br> <input class="textbox" type="text" name="student_name"/><br><br>
 					Hypothesis:<br> <input class="textbox" type="text" name="hypothesis" size="50"/><br><br>
 					<input type="submit" value="Submit"/><br><br>
 				</form>
-			</div>
 		</div>
-	</div>
 
-	<br><br>
 
-	<div class="info">
-		<div class="forms">
-			<div id="community_map">
+		<div class="forms content_forms" id="communityMap">
 			<h2 style="text-align: left">Submit a new food resource</h2>
 				<form action="/submit_location" method="post"> 
 					Name:<br> <input type="text" class="textbox" id="student_name" name="name"/><br><br>
@@ -88,17 +109,10 @@
 					</select><br><br>
 					<input type="submit" onclick="codeAddress()" value="Submit"/><br><br>
 				</form>
-			</div>
 		</div>
-	</div>
-
 	
 
-	<br><br>
-
-	<div class="info">
-		<div class="forms">		
-			<div id="projs">
+		<div class="forms content_forms" id="studentProjs">		
 				<h2 style="text-align: left">Submit a project</h2>
 					<form method="post" action="/submit_projects">
 						Name:<br> <input class="textbox" id="student_name"type="text" name="student_name"/><br><br>
@@ -110,10 +124,18 @@
 						<input type="radio" name="phase_num" value="3"> 3</input><br><br>
 						<input type="submit" value="Submit"/><br>
 					</form>
-				</div>
-			</div>
 		</div>
+</div>
 	
+<script> 
+    $(".toggle_forms").bind("click", function() {
+         $(".content_forms").hide();
+         var divId = $(this).attr("divId");
+        $("#" + divId).slideToggle('slow', function() {});
+      //  $("#" + divId).show();
+      });
+</script>
+
 
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true"></script>
 

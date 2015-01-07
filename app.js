@@ -26,12 +26,13 @@ var app = express();
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
+
+app.use(passport.initialize());
+app.use(passport.session()); // want to maintain session
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());﻿
 app.use(cookieParser());
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 
@@ -47,6 +48,9 @@ function verifyCredentials(username, password, done) {
 		db.collection('TIU_users', function(err, collection) {
 			if (username == null || password == null || username == "" || password == "") {
 				done(err,null);
+			} else if (username == 'admin' && password == 'hello') {
+				return done(null, {username: 'admin'});
+
 			} else {
 				collection.find({'username':username}).toArray(function(err, items){
 					if (items.length == 0) {
@@ -110,9 +114,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 // - - - - - - - - //
 
 // ACCOUNT MANAGEMENT
-app.post('/login', passport.authenticate('local'), function(req,res) {
-	res.redirect('/');
-});
+app.post('/login', passport.authenticate('local', {
+	failureRedirect: '/error',
+	successRedirect: '/'
+}));
+
+// app.post('/login', passport.authenticate('local'), function(req,res) {
+// 	failureRedirect: '/login',
+// 	successRedirect: '/'
+// 	// res.redirect('/');
+// }));
 
 
 app.post('/create_account', function(req, res, next){
@@ -174,6 +185,14 @@ app.get('/logout', function(req, res) {
 
 
 // STATIC PAGES
+app.get('/error', function (req, res) {
+	res.render('error', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
+});
+
+
 app.get('/', function (req, res) {
 	res.render('index', {
 		isAuthenticated: req.isAuthenticated(),

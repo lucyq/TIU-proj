@@ -18,6 +18,8 @@ var bodyParser = require("body-parser");
 app.use(bodyParser());
 app.set('view engine', 'jade');
 
+
+
 // var routes = require('./routes/');
 
 // // Handle requests for '/'
@@ -61,11 +63,6 @@ app.use(function(err, req, res, next) {
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res) {
-    res.render('index', { title: 'Express' });
-});
-
-
 
 app.post('/submit_hypothesis.json', function (request, response) {
 	response.header("Access-Control-Allow-Origin", "*");

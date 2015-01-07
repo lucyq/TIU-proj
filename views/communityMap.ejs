@@ -1,8 +1,23 @@
 <% layout('layout') -%>
 <head>
 
+  <style>
+  .content_filter {
+    display: none;
+  }
+
+  .toggle_filter {
+    background-color: rgba(100,100,100,0.3);
+
+  }
+
+  .toggle_filter:hover {
+    background-color: rgba(250,230,178,0.5);
+  }
+
+  </style>
+
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 	<script src="../js/mapView.js"></script>
   <script src="Processing.js/processing.js"></script>
 </head>
@@ -13,14 +28,48 @@
 		
 		<div id ="map_canvas"></div>
   	
-    <!--   <div id="viz">
+      <div id="viz">
         <h2>Visualization</h2>
         <canvas data-processing-sources="../js/map_chart.pde"></canvas>
       </div>
   		<div id="desc">
-			<h2>Filter by</h2>
+  			<h2 style="text-align: left">Filter by   
+          <span class="toggle_filter" divId="location_checkboxes">Location</span>
+          <span class="toggle_filter" divId="resource_type_checkboxes">Resource Type</span>
+        </h2>
+        
+        <div class="content_filter" id="resource_type_checkboxes">
+          <input type="checkbox" name="location_type" value="cafeteria">  Cafeteria</input><br>
+          <input type="checkbox" name="location_type" value="convenience_store">  Convenience Store</input><br>
+          <input type="checkbox" name="location_type" value="farmers_market">  Farmer's Market</input><br> 
+          <input type="checkbox" name="location_type" value="fast_food">  Fast Food</input><br>
+          <input type="checkbox" name="location_type" value="garden">  Garden/Farm</input><br>
+          <input type="checkbox" name="location_type" value="grocery_store">  Grocery Store</input><br>
+          <input type="checkbox" name="location_type" value="liquor_store">  Liquor Store</input><br>
+          <input type="checkbox" name="location_type" value="restaurant">  Restaurant</input><br>
+          <input type="checkbox" name="location_type" value="vending_machine">  Vending Machine</input>
+          <br><br>
+          <input type="submit" onclick="filterByType()" value="Filter"/><br><br>
+        </div>
+
+        <div class="content_filter" id="location_checkboxes">
+
+        </div>
+
+
+
   		</div>
 
- -->
+<script>
+
+    $(".toggle_filter").bind("click", function() {
+         $(".content_filter").hide();
+         var divId = $(this).attr("divId");
+      //  $("#" + divId).slideToggle('slow', function() {});
+        $("#" + divId).show();
+      });
+
+
+</script>
 
 </body>
