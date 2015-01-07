@@ -8,6 +8,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var engine = require('ejs-locals');
 var cookieParser = require('cookie-parser');
+var expressSession = require('express-session'); // creates in memory store
 var mongo = require('mongodb');
 
 
@@ -29,11 +30,13 @@ app.set('view engine', 'ejs');
 
 app.use(passport.initialize());
 app.use(passport.session()); // want to maintain session
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());﻿
 app.use(cookieParser());
 
-
+app.use(expressSession({ secret: process.env.SESSION_SECRET || "butterflies",
+						 resave: false, saveUninitialized: false})); // butterflies can be anything
 
 
 var mongoUri = process.env.MONGOLAB_URI ||
@@ -48,18 +51,20 @@ function verifyCredentials(username, password, done) {
 		db.collection('TIU_users', function(err, collection) {
 			if (username == null || password == null || username == "" || password == "") {
 				done(err,null);
-			} else if (username == 'admin' && password == 'hello') {
-				return done(null, {username: 'admin'});
+			// } else if (username == 'admin' && password == 'hello') {
+			// 	console.log("WOOOOOHOOOO");
+			// 	return done(null, {name: 'admin'});
 
 			} else {
 				collection.find({'username':username}).toArray(function(err, items){
 					if (items.length == 0) {
-						done(null,null);
+						done(null, false, {message: 'Incorrect username'});
 					} else {
 						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
-							done(null, JSON.stringify(items[0]));
+								console.log("WOOHOO");
+							return done(null, {id: username, name: username});
 						} else {
-							done(null,null);
+							done(null, false, {message: 'Incorrect password'});
 						}
 					}
 				});

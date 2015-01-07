@@ -140,11 +140,11 @@ h4 {
 .info {
 	background-color: rgba(78,154,182,0.4);
 	
-	margin-right: 80px;
-	margin-left: 80px;
-	padding: 5px;
-	padding-left: 30px;
-	padding-right: 30px;
+	margin-right: 100px;
+	margin-left: 100px;
+	padding: 10px;
+	padding-left: 50px;
+	padding-right: 50px;
 
 }
 

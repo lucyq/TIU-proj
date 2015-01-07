@@ -11,6 +11,7 @@
 		height: auto;
 
 	}
+
 </style>
 <h1>About</h1>
 
@@ -52,7 +53,7 @@
 	];
 
 	for (k in people) {
-		$("#profiles").append("<img class='headshot' src='" + people[k]["image"] + "'><h4 style='text-align: left'>" + people[k]["name"] + " | " + people[k]["role"] + "</h4><p>" + people[k]["desc"] + "</p><a href='mailto:" + people[k]["email"] + "?subject=Hi!'>Contact</a><br><br>");
+		$("#profiles").append("<img class='headshot' src='" + people[k]["image"] + "'><h4 style='text-align: left'>" + people[k]["name"] + " | " + people[k]["role"] + "</h4><p>" + people[k]["desc"] + "</p><a href='mailto:" + people[k]["email"] + "'>Contact</a><br><br>");
 	}
 
 
