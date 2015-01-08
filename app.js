@@ -158,7 +158,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // NOTE: google failure flash req.flash is a thing :O
 app.post('/login', passport.authenticate('local', { 
 	failureRedirect: '/error',
-	successRedirect: '/communityMap'
+	successRedirect: '/landing'
 }));
 
 // app.post('/login', passport.authenticate('local'), function(req,res) {
@@ -294,6 +294,14 @@ app.get('/viewClasses', function (req, res) {
 
 app.get('/manageClasses', function (req, res) {
 	res.render('manageClasses', {
+		isAuthenticated: req.isAuthenticated(),
+		user: req.user
+	});
+});
+
+
+app.get('/landing', function (req, res) {
+	res.render('landing', {
 		isAuthenticated: req.isAuthenticated(),
 		user: req.user
 	});
