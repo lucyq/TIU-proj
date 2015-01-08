@@ -10,13 +10,15 @@ var engine = require('ejs-locals');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // creates in memory store
 var mongo = require('mongodb');
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
-	passportLocalMongoose = require('passport-local-mongoose');
+var mongoose = require('mongoose');
+
 
 var passport = require('passport');
-var passportLocal = require('passport-local');
-var passportHttp = require('passport-http');
+
+var localStrategy = require('passport-local').Strategy;
+
+// var passportLocal = require('passport-local');
+// var passportHttp = require('passport-http');
 var crypto = require('crypto');
 
 var app = express();
@@ -29,69 +31,164 @@ var app = express();
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
-
-app.use(passport.initialize());
-app.use(passport.session()); // want to maintain session
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());﻿
 app.use(cookieParser());
+
+
+//app.use(session({ keys: ['secretkey1', 'secretkey2', '...']}));
+
+// ACCOUNT CONFIGURATION
+
+// configure middleware
+app.use(passport.initialize());
+app.use(passport.session()); // want to maintain session
+
+// Configure passport-local to use account model for authentication
+var Account = require('./models/account');
+passport.use(new localStrategy(Account.authenticate()));
+
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+// connect to mongose
+mongoose.connect('mongodb://localhost/passport_local_mongoose_TIU', function(err) {
+  if (err) {
+    console.log('Could not connect to mongodb on localhost. Ensure that you have mongodb running on localhost and mongodb accepts connections on standard ports!');
+  }
+});
+
 
 app.use(expressSession({ secret: process.env.SESSION_SECRET || "butterflies",
 						 resave: false, saveUninitialized: false})); // butterflies can be anything
 
 
-var User = require('./models/account');
+// var mongoUri = process.env.MONGOLAB_URI ||
+//   				process.env.MONGOHQ_URL || 
+//   				'mongodb://localhost/mydb';
+
+// var ObjectId = require('mongodb').ObjectID;
 
 
-// modules.export = mongoose.model('User', User);
+// function verifyCredentials(username, password, done) {
+// 	mongo.Db.connect(mongoUri, function(err, db) {
+// 		db.collection('TIU_users', function(err, collection) {
+// 			if (username == null || password == null || username == "" || password == "") {
+// 				done(err,null);
+// 			// } else if (username == 'admin' && password == 'hello') {
+// 			// 	console.log("WOOOOOHOOOO");
+// 			// 	return done(null, {name: 'admin'});
 
-var mongoUri = process.env.MONGOLAB_URI ||
-  				process.env.MONGOHQ_URL || 
-  				'mongodb://localhost/mydb';
-
-var ObjectId = require('mongodb').ObjectID;
-
-
-function verifyCredentials(username, password, done) {
-	mongo.Db.connect(mongoUri, function(err, db) {
-		db.collection('TIU_users', function(err, collection) {
-			if (username == null || password == null || username == "" || password == "") {
-				done(err,null);
-			// } else if (username == 'admin' && password == 'hello') {
-			// 	console.log("WOOOOOHOOOO");
-			// 	return done(null, {name: 'admin'});
-
-			} else {
-				collection.find({'username':username}).toArray(function(err, items){
-					if (items.length == 0) {
-						done(null, false, {message: 'Incorrect username'});
-					} else {
-						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
-								console.log("WOOHOO");
-							return done(null, {id: username, name: username});
-						} else {
-							done(null, false, {message: 'Incorrect password'});
-						}
-					}
-				});
-			}
-		});
-	});
+// 			} else {
+// 				collection.find({'username':username}).toArray(function(err, items){
+// 					if (items.length == 0) {
+// 						done(null, false, {message: 'Incorrect username'});
+// 					} else {
+// 						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
+// 								console.log("WOOHOO");
+// 							return done(null, {id: username,name: username});
+// 						} else {
+// 							done(null, false, {message: 'Incorrect password'});
+// 						}
+// 					}
+// 				});
+// 			}
+// 		});
+// 	});
 	// // Pretend this is using a real database
 	// if (username == password) {
 	// 	done(null, {id: username, name: username}); // user object with other info		
 	// } else {
 	// 	done(null,null); // no error but didn't authenticate correctly, validation failed
 	// }
-}
+//}
 
-passport.use(new LocalStrategy(Account.authenticate()));
-//passport.use(new passportLocal.Strategy(verifyCredentials));
+/* 
+ 
+ collection.find({'username':username}).toArray(function(err, items){
+// 					if (items.length == 0) {
+// 						done(null, false, {message: 'Incorrect username'});
+// 					} else {
+// 						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
+// 								console.log("WOOHOO");
+// 							return done(null, {id: username,name: username});
+// 						} else {
+// 							done(null, false, {message: 'Incorrect password'});
+// 						}
+// 					}
+// 				});
+
+*/
+
+
+// passport.use(new passportLocal.Strategy({
+// 	usernameField: 'username',
+// 	passwordField: 'password'
+// 	},
+// 	function (usernameField, passwordField, done) {
+// 		// CHECK FOR NULLS AND EMPTIES
+// 		process.nextTick(function () {
+// 			mongo.Db.connect(mongoUri, function(err, db) {
+// 				db.collection('TIU_users', function(err, col) {
+// 					if (!err) {
+// 						col.findOne ({
+// 							'username':usernameField,
+// 							'password': crypto.createHash('md5').update(passwordField).digest("hex")
+// 						}, function (err, user) {
+// 							if (err) {
+// 								return done(err);
+// 							}
+// 							if (!user) {
+// 								return done(null, false, {message: "User doesn't exist"});
+// 							}
+// 							return done(null, user);
+// 						});
+// 					} else {
+// 						console.log(5, 'Database error');
+// 					}
+// 				});
+// 			}
+// 		});
+// 	});
+// 	});
+
+
+
+
+// passport.use(new passportLocal.Strategy({
+//         username: 'username',
+//         password: 'password',
+//     },
+
+//     function (username, password, done) {
+//         process.nextTick(function () {
+//         	mongo.Db.connect(mongoUri, function(err, db) {
+// 	            db.collection('TIU_users', function (error, collection) {
+// 	                if (!error) {
+// 	                    collection.findOne({
+// 	                        'username': username,
+// 	                        'password':crypto.createHash('md5').update(password).digest("hex") // use there some crypto function
+// 	                    }, function (err, user) {
+// 	                        if (err) {
+// 	                            return done(err);
+// 	                        }
+// 	                        if (!user) {
+// 	                            return done(null, false, {message: 'user does not exist'});
+// 	                        }
+// 	                        return done(null, user);
+// 	                    });
+// 	                } else {
+// 	                    console.log(5, 'DB error');
+// 	                }
+// 	            });
+//         	});
+//         });
+//     }));
+
 //passport.use(new passportHttp.BasicStrategy(verifyCredentials));
 
 
-// passport.serializeUser(function(user, done){
+// passport.serializeUser(function(username, done){
 // 	// would query database usually
 // 	done(null, user); // first arg is error
 // }); // passport invokes functio nfor us
@@ -100,9 +197,6 @@ passport.use(new LocalStrategy(Account.authenticate()));
 // 	// query databse here
 // 	done(null, user);
 // });
-
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
 
 
 function ensureAuthorized(req, res, next) {
@@ -140,59 +234,78 @@ app.post('/login', passport.authenticate('local', {
 // 	successRedirect: '/'
 // 	// res.redirect('/');
 // }));
+/* 
 
+*/
+app.post('/create_account', function(req, res, next) {
+  console.log('registering user');
+  Account.register(new Account({ 
+  			username: req.body.username }), req.body.password, function(err) {
+    if (err) { console.log('error while user register!', err); return next(err); }
 
-app.post('/create_account', function(req, res, next){
-	mongo.Db.connect(mongoUri, function (err,db){
-		db.collection('TIU_users', function(err, col) {
-			var username = req.body.username;
-			var password = req.body.password;
-			var full_name = req.body.full_name;
-			var ver_password = req.body.confirm_password;
-			var class_id = req.body.class_id;
-			var email = req.body.email;
-			var time = new Date();
+    console.log('user registered!');
 
-     		// if (username == null || password == null || ver_password == null || email == null || 
-     		// 	first_name == null || last_name == null || phone_num == null) {
-     		// 	res.send('Missing fields!');
-     		// } else if (password != ver_password){
-     		if (password != ver_password) {
-     			res.send("Passwords don't match!");
-     		} else {
-     			col.find({'username':username}).toArray(function(err, items) {
-     				if (items.length != 0) {
-     					res.send("Username has been taken!");
-     				} else {
-     					// sendgrid.send({
-     					// 	to: email,
-     					// 	from: "tiu.proj@gmail.com",
-     					// 	subject: "Welcome to HPRT Toolkit!",
-     					// 	text: "Hello " + full_name + ", welcome to HPRT Toolkit!"	
-     					// }, function(err, json) {
-     					// 	if (err) { return console.error(err); }
-     					// 	console.log(json);
-     					// });
-     					col.insert({'username':username,
-     								'password':crypto.createHash('md5').update(password).digest("hex"),
-     								'full_name': full_name,
-     								'email':email,
-     								'class_id':class_id,
-     								'created_at':time
-			     					}, {safe: true}, function(err, res) {
-			     						col.find({'username':username}).toArray(function(err, items) {
-			     							// TODO: what do i put here?
-			     						});
-
-     					});
-   						res.redirect("/");
-     				}
-     			});
-     		}
-		});
-	});
-  
+    res.redirect('/');
+  });
 });
+
+
+
+// app.post('/create_account', function(req, res, next){
+// 	mongo.Db.connect(mongoUri, function (err,db){
+// 		db.collection('TIU_users', function(err, col) {
+// 			var username = req.body.username;
+// 			var password = req.body.password;
+// 			var full_name = req.body.full_name;
+// 			var ver_password = req.body.confirm_password;
+// 			var class_id = req.body.class_id;
+// 			var email = req.body.email;
+// 			var time = new Date();
+
+//      		// if (username == null || password == null || ver_password == null || email == null || 
+//      		// 	first_name == null || last_name == null || phone_num == null) {
+//      		// 	res.send('Missing fields!');
+//      		// } else if (password != ver_password){
+//      		if (password != ver_password) {
+//      			res.send("Passwords don't match!");
+//      		} else {
+//      			col.find({'username':username}).toArray(function(err, items) {
+//      				if (items.length != 0) {
+//      					res.send("Username has been taken!");
+//      				} else {
+//      					// sendgrid.send({
+//      					// 	to: email,
+//      					// 	from: "tiu.proj@gmail.com",
+//      					// 	subject: "Welcome to HPRT Toolkit!",
+//      					// 	text: "Hello " + full_name + ", welcome to HPRT Toolkit!"	
+//      					// }, function(err, json) {
+//      					// 	if (err) { return console.error(err); }
+//      					// 	console.log(json);
+//      					// });
+//      					col.insert({'username':username,
+//      								'password':crypto.createHash('md5').update(password).digest("hex"),
+//      								'full_name': full_name,
+//      								'email':email,
+//      								'class_id':class_id,
+//      								'created_at':time
+// 			     					}, {safe: true}, function(err, res) {
+// 			     						col.find({'username':username}).toArray(function(err, items) {
+// 			     							// TODO: what do i put here?
+// 			     						});
+
+//      					});
+//    						res.redirect("/");
+//      				}
+//      			});
+//      		}
+// 		});
+// 	});
+  
+// });
+
+
+
+
 
 app.get('/logout', function(req, res) {
 	req.logout();
@@ -426,4 +539,4 @@ app.listen(port, function() {
 	console.log("Listening in port " + port);
 });
 
-
+module.exports = app;
