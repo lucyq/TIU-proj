@@ -12,6 +12,7 @@ var expressSession = require('express-session'); // creates in memory store
 var mongo = require('mongodb');
 
 
+
 var passport = require('passport');
 var passportLocal = require('passport-local');
 var passportHttp = require('passport-http');
@@ -28,8 +29,6 @@ app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
 
-app.use(passport.initialize());
-app.use(passport.session()); // want to maintain session
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());﻿
@@ -39,138 +38,96 @@ app.use(expressSession({ secret: process.env.SESSION_SECRET || "butterflies",
 						 resave: false, saveUninitialized: false})); // butterflies can be anything
 
 
+// enable CORS
+
 var mongoUri = process.env.MONGOLAB_URI ||
   				process.env.MONGOHQ_URL || 
   				'mongodb://localhost/mydb';
 
 var ObjectId = require('mongodb').ObjectID;
 
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
-// function verifyCredentials(username, password, done) {
-// 	mongo.Db.connect(mongoUri, function(err, db) {
-// 		db.collection('TIU_users', function(err, collection) {
-// 			if (username == null || password == null || username == "" || password == "") {
-// 				done(err,null);
-// 			// } else if (username == 'admin' && password == 'hello') {
-// 			// 	console.log("WOOOOOHOOOO");
-// 			// 	return done(null, {name: 'admin'});
 
-// 			} else {
-// 				collection.find({'username':username}).toArray(function(err, items){
-// 					if (items.length == 0) {
-// 						done(null, false, {message: 'Incorrect username'});
-// 					} else {
-// 						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
-// 								console.log("WOOHOO");
-// 							return done(null, {id: username,name: username});
-// 						} else {
-// 							done(null, false, {message: 'Incorrect password'});
-// 						}
-// 					}
-// 				});
-// 			}
-// 		});
-// 	});
-	// // Pretend this is using a real database
-	// if (username == password) {
-	// 	done(null, {id: username, name: username}); // user object with other info		
-	// } else {
-	// 	done(null,null); // no error but didn't authenticate correctly, validation failed
-	// }
-//}
 
-/* 
- 
- collection.find({'username':username}).toArray(function(err, items){
-// 					if (items.length == 0) {
-// 						done(null, false, {message: 'Incorrect username'});
-// 					} else {
-// 						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
-// 								console.log("WOOHOO");
-// 							return done(null, {id: username,name: username});
-// 						} else {
-// 							done(null, false, {message: 'Incorrect password'});
-// 						}
-// 					}
-// 				});
+app.use(passport.initialize());
+app.use(passport.session()); // want to maintain session
 
-*/
+
+function verifyCredentials(username, password, done) {
+	mongo.Db.connect(mongoUri, function(err, db) {
+		db.collection('TIU_users', function(err, collection) {
+			if (username == null || password == null || username == "" || password == "") {
+				done(err,null);
+			} else {
+				collection.find({'username':username}).toArray(function(err, items){
+					if (items.length == 0) {
+						done(null, false, {message: 'Incorrect username'});
+					} else {
+						if (items[0].password == crypto.createHash('md5').update(password).digest("hex")) {
+							return done(null, {id: username, name: username});
+						} else {
+							done(null, false, {message: 'Incorrect password'});
+						}
+					}
+				});
+			}
+		});
+	});
+}
 
 
 // passport.use(new passportLocal.Strategy({
-// 	usernameField: 'username',
-// 	passwordField: 'password'
-// 	},
-// 	function (usernameField, passwordField, done) {
-// 		// CHECK FOR NULLS AND EMPTIES
-// 		process.nextTick(function () {
-// 			mongo.Db.connect(mongoUri, function(err, db) {
-// 				db.collection('TIU_users', function(err, col) {
-// 					if (!err) {
-// 						col.findOne ({
-// 							'username':usernameField,
-// 							'password': crypto.createHash('md5').update(passwordField).digest("hex")
-// 						}, function (err, user) {
-// 							if (err) {
-// 								return done(err);
-// 							}
-// 							if (!user) {
-// 								return done(null, false, {message: "User doesn't exist"});
-// 							}
-// 							return done(null, user);
-// 						});
-// 					} else {
-// 						console.log(5, 'Database error');
-// 					}
-// 				});
-// 			}
-// 		});
-// 	});
-// 	});
+//         username: 'username',
+//         password: 'password',
+//     },
 
-passport.use(new passportLocal.Strategy({
-        username: 'username',
-        password: 'password',
-    },
+//     function (username, password, done) {
+//         process.nextTick(function () {
+//         	mongo.Db.connect(mongoUri, function(err, db) {
+// 	            db.collection('TIU_users', function (error, collection) {
+// 	                if (!error) {
+// 	                    collection.findOne({
+// 	                        'username': username,
+// 	                        'password':crypto.createHash('md5').update(password).digest("hex") // use there some crypto function
+// 	                    }, function (err, user) {
+// 	                        if (err) {
+// 	                            return done(err);
+// 	                        }
+// 	                        if (!user) {
+// 	                            return done(null, false, {message: 'user does not exist'});
+// 	                        }
+// 	                        console.log(user);
+// 	                        return done(null, user);
+// 	                    });
+// 	                } else {
+// 	                    console.log(5, 'DB error');
+// 	                }
+// 	            });
+//         	});
+//         });
+//     }));
 
-    function (username, password, done) {
-        process.nextTick(function () {
-        	mongo.Db.connect(mongoUri, function(err, db) {
-	            db.collection('TIU_users', function (error, collection) {
-	                if (!error) {
-	                    collection.findOne({
-	                        'username': username,
-	                        'password':crypto.createHash('md5').update(password).digest("hex") // use there some crypto function
-	                    }, function (err, user) {
-	                        if (err) {
-	                            return done(err);
-	                        }
-	                        if (!user) {
-	                            return done(null, false, {message: 'user does not exist'});
-	                        }
-	                        return done(null, user);
-	                    });
-	                } else {
-	                    console.log(5, 'DB error');
-	                }
-	            });
-        	});
-        });
-    }));
-
-//passport.use(new passportHttp.BasicStrategy(verifyCredentials));
+passport.use(new passportLocal.Strategy(verifyCredentials));
+passport.use(new passportHttp.BasicStrategy(verifyCredentials));
 
 
 passport.serializeUser(function(user, done){
 	// would query database usually
-	done(null, user); // first arg is error
-}); // passport invokes functio nfor us
+	done(null, user.name); // first arg is error
+}); 
+
 
 passport.deserializeUser(function(id, done) {
-	// query databse here
-	done(null, user);
+	console.log("here");
+	console.log("id: " + id);
+	done(null, {id: id, name: id})
 });
-
 
 function ensureAuthorized(req, res, next) {
 	if(req.isAuthenticated()) {
@@ -197,9 +154,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // - - - - - - - - //
 
 // ACCOUNT MANAGEMENT
-app.post('/login', passport.authenticate('local', {
+
+// NOTE: google failure flash req.flash is a thing :O
+app.post('/login', passport.authenticate('local', { 
 	failureRedirect: '/error',
-	successRedirect: '/'
+	successRedirect: '/communityMap'
 }));
 
 // app.post('/login', passport.authenticate('local'), function(req,res) {
