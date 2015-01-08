@@ -85,6 +85,10 @@ a:visited {
 
 }*/
 
+.account_link {
+	background-color: rgba(80, 80, 80, 0.2);
+}
+
 .dropdown_link {
 	font-family: 'Source Sans Pro';
 	color: #000;

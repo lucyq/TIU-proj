@@ -82,37 +82,6 @@ function verifyCredentials(username, password, done) {
 }
 
 
-// passport.use(new passportLocal.Strategy({
-//         username: 'username',
-//         password: 'password',
-//     },
-
-//     function (username, password, done) {
-//         process.nextTick(function () {
-//         	mongo.Db.connect(mongoUri, function(err, db) {
-// 	            db.collection('TIU_users', function (error, collection) {
-// 	                if (!error) {
-// 	                    collection.findOne({
-// 	                        'username': username,
-// 	                        'password':crypto.createHash('md5').update(password).digest("hex") // use there some crypto function
-// 	                    }, function (err, user) {
-// 	                        if (err) {
-// 	                            return done(err);
-// 	                        }
-// 	                        if (!user) {
-// 	                            return done(null, false, {message: 'user does not exist'});
-// 	                        }
-// 	                        console.log(user);
-// 	                        return done(null, user);
-// 	                    });
-// 	                } else {
-// 	                    console.log(5, 'DB error');
-// 	                }
-// 	            });
-//         	});
-//         });
-//     }));
-
 passport.use(new passportLocal.Strategy(verifyCredentials));
 passport.use(new passportHttp.BasicStrategy(verifyCredentials));
 
@@ -124,8 +93,6 @@ passport.serializeUser(function(user, done){
 
 
 passport.deserializeUser(function(id, done) {
-	console.log("here");
-	console.log("id: " + id);
 	done(null, {id: id, name: id})
 });
 
@@ -426,23 +393,14 @@ app.get('/class_data', function(req, res, next) {
 	});
 });
 
+
 app.get('/hyp_data', function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		db.collection('TIU_submissions', function(err, col) {
 			//var hyp_data = " ";
 			col.find().toArray(function(err, items) {
 				if (!err) {
-					// hyp_data = "<!DOCTYPE HTML><html><head><title>This Is Us</title><link rel='stylesheet' href='bootstrap/dist/css/bootstrap.css'><link rel='stylesheet' href='css/style.css'><script src='jquery/dist/jquery.js'></script><script src='bootstrap/dist/js/bootstrap.js'></script><link rel='SHORTCUT ICON' href='images/tree_favicon.gif' type='image/x-icon'/><link rel='ICON' href='images/tree_favicon.gif' type='image/ico'/></head>";
-					// hyp_data += "<body><div><div id='nav'>";
-					// hyp_data += "<ul id='nav_links'><li><a href='/'>THIS IS US</a></li><li>|</li><li><a href='hypothesis'>Student Hypotheses</a></li><li><a href='whatWeEat'>What We Eat</a></li><li><a href='communityMap'>Community Mapping</a></li><li><a href='studentProjs'>Student Projects</a></li><li><a href='submit'>Submit Data</a></li>";
-					// hyp_data += "</ul></div><h1>Student Hypotheses</h1><div class='info'>";	
-					// for (var count = items.length - 1; count >= 0; count--) {
-					// 	hyp_data += "<h4>Student: " + items[count].student + "</h4>" +
-					// 				"<p>" + items[count].hypothesis + "</p><br>";
-					// }
-					// hyp_data += "</div></div></body>";
-				//res.send(hyp_data);
-				res.send(items);
+					res.send(items);
 				}
 			});
 		});
