@@ -10,7 +10,9 @@ var engine = require('ejs-locals');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // creates in memory store
 var mongo = require('mongodb');
-
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	passportLocalMongoose = require('passport-local-mongoose');
 
 var passport = require('passport');
 var passportLocal = require('passport-local');
@@ -38,6 +40,11 @@ app.use(cookieParser());
 app.use(expressSession({ secret: process.env.SESSION_SECRET || "butterflies",
 						 resave: false, saveUninitialized: false})); // butterflies can be anything
 
+
+var User = require('./models/account');
+
+
+// modules.export = mongoose.model('User', User);
 
 var mongoUri = process.env.MONGOLAB_URI ||
   				process.env.MONGOHQ_URL || 
@@ -79,19 +86,23 @@ function verifyCredentials(username, password, done) {
 	// }
 }
 
-passport.use(new passportLocal.Strategy(verifyCredentials));
-passport.use(new passportHttp.BasicStrategy(verifyCredentials));
+passport.use(new LocalStrategy(Account.authenticate()));
+//passport.use(new passportLocal.Strategy(verifyCredentials));
+//passport.use(new passportHttp.BasicStrategy(verifyCredentials));
 
 
-passport.serializeUser(function(user, done){
-	// would query database usually
-	done(null, user); // first arg is error
-}); // passport invokes functio nfor us
+// passport.serializeUser(function(user, done){
+// 	// would query database usually
+// 	done(null, user); // first arg is error
+// }); // passport invokes functio nfor us
 
-passport.deserializeUser(function(id, done) {
-	// query databse here
-	done(null, user);
-});
+// passport.deserializeUser(function(id, done) {
+// 	// query databse here
+// 	done(null, user);
+// });
+
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 
 function ensureAuthorized(req, res, next) {
