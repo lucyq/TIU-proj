@@ -122,6 +122,7 @@ function init() {
 			if (request.readyState==4 && request.status==200) {
 				
 				data = JSON.parse(request.responseText);
+				console.log("DATA: " + data[0]);
 				storeData();
 				renderMarkers();
 			}
@@ -166,7 +167,11 @@ function storeData() {
 		}
 
 		if (resource_type != null) {
-			formatted_data[index]["locations"].push(data[k]["location_address"]);
+			var loc = data[k]["location_address"];
+			var lat = data[k]["lat"];
+			var lng = data[k]["lng"];
+			var curr_location = [loc, lat, lng];
+			formatted_data[index]["locations"].push(curr_location);
 		}
 
 	}
@@ -215,41 +220,41 @@ function renderMarkers() {
 			renderResourceType(i);
 
 			var addresses = formatted_data[i]["locations"];
+			
 		
 			for (var j = 0; j < addresses.length; j++) {
-				geocoder.geocode({'address': addresses[j]}, function(results, status) {
-					if (status == google.maps.GeocoderStatus.OK) {
-						var pos = results[0].geometry.location;
+				var lat = formatted_data[i]["locations"][1];
+				var lng = formatted_data[i]["locations"][2];
+				var pos = new google.maps.LatLng(lat, lng);
+				console.log("POS: " + pos);
 					
-					
-						var marker = new google.maps.Marker({
-							map: map,
-							icon: formatted_data[i]["image"],
-							position: pos
-						});
+				var marker = new google.maps.Marker({
+					map: map,
+					icon: formatted_data[i]["image"],
+					position: pos
+				});
 
-						var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + results[0].formatted_address + "</p></div>";
+				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + formatted_data[i]["locations"][0] + "</p></div>";
 
 						// var infoWindow = new google.maps.InfoWindow({
 						// 	content: contentString,
 						// 	maxWidth: 200
 						// });
 
-						var infowindow = new google.maps.InfoWindow();
+				var infowindow = new google.maps.InfoWindow();
 
-						google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
-							return function () {
-								infowindow.setContent(contentString);
-								infowindow.open(map, marker);
-							};
-						}(marker, contentString, infowindow));
-					}
-				});
-
+				google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
+					return function () {
+						infowindow.setContent(contentString);
+						infowindow.open(map, marker);
+					};
+				}(marker, contentString, infowindow));
 			}
+
 		}
-	} 
-}
+	}
+} 
+
 
 
 function renderResourceType(index) {

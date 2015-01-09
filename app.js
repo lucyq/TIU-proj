@@ -334,13 +334,20 @@ app.post("/submit_location", function(req, res, next) {
 			if (err) {
 				res.send("Database Error!");
 			}
-			var student = req.body.name;
+			var student = req.body.student;
 			var location_name = req.body.location_name;
 			var location_address = req.body.location_address;
 			var location_type = req.body.location_type;
 			var location_neighborhood = req.body.location_neighborhood;
 			var lat = req.body.lat;
 			var lng = req.body.lng;
+			
+			console.log(student);
+			console.log(location_name);
+			console.log(location_address + " " + location_type + " " + location_neighborhood)
+			console.log(lat);
+			console.log(lng);
+
 
 			if (student == null || location_name == null || 
 				location_address == null || location_type == null ||
@@ -351,6 +358,7 @@ app.post("/submit_location", function(req, res, next) {
 				col.find({'student':student}).toArray(function(err, items){
 					col.insert({'student':student, 'location_name':location_name, 
 								'location_address':location_address, 'location_type':location_type, 'location_neighborhood':location_neighborhood, 'lat':lat, 'lng':lng}, function(err, items) {
+									console.log("ENTERED INTO DATABSE");
 						res.redirect('communityMap');
 					});
 				});
@@ -365,6 +373,7 @@ app.get('/location_data', function (req, res, next) {
 		db.collection('TIU_locations', function(err, col){
 			if (!err) {
 				col.find().toArray(function(err, items) {
+					console.log(items);
 					res.send(items);
 				});
 			}
