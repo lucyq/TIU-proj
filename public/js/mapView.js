@@ -215,8 +215,7 @@ function renderMarkers() {
 			renderResourceType(i);
 
 			var addresses = formatted_data[i]["locations"];
-			var image = formatted_data[i]["image"];
-
+		
 			for (var j = 0; j < addresses.length; j++) {
 				geocoder.geocode({'address': addresses[j]}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
@@ -225,7 +224,7 @@ function renderMarkers() {
 					
 						var marker = new google.maps.Marker({
 							map: map,
-							icon: image,
+							icon: formatted_data[i]["image"],
 							position: pos
 						});
 

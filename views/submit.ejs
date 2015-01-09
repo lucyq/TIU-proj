@@ -43,8 +43,8 @@
 
 		<div class="forms content_forms" id="communityMap">
 			<h2 style="text-align: left">Submit a new food resource</h2>
-				<form action="/submit_location" method="post"> 
-					Name:<br> <input type="text" class="textbox" id="student_name" name="name"/><br><br>
+		<!-- 		<form action="/submit_location" method="post"> 
+		 -->			Name:<br> <input type="text" class="textbox" id="student_name" name="name"/><br><br>
 					Name of location:<br> <input class="textbox" id="location_name" type="text" name="location_name"/><br><br>
 					Address of location:<br> <input type="text" id="location_address" class="textbox"  size="50" name="location_address"/><br><br>
 					Type of food resource: <br><br>
@@ -108,8 +108,8 @@
 						</optgroup>
 					</select><br><br>
 					<input type="submit" onclick="codeAddress()" value="Submit"/><br><br>
-				</form>
-		</div>
+			<!-- 	</form>
+ -->		</div>
 	
 
 		<div class="forms content_forms" id="studentProjs">		
@@ -151,24 +151,43 @@
 
 
 		function codeAddress() {
+			console.log('here')
 			student_name = document.getElementById("student_name").value;
 			location_name = document.getElementById("location_name").value;
 			location_address = document.getElementById("location_address").value;
 			
 			console.log(location_address);
 			geocoder = new google.maps.Geocoder();
-			geocoder.geocode({'address':location_address}, function(results,status){});
+			geocoder.geocode({'address':location_address}, function(results,status){
+					console.log("RESULTS: " + results)
+					if (status == google.maps.GeocoderStatus.OK) {
+						pos = results[0].geometry.location;
+						console.log(pos);
+
+						form_data = {"student" : student_name, "location_name":location_name, "location_address":location_address, "position": pos, "location_type":"restaurant"};
+
+						$.ajax({
+							url: "/submit_location",
+							type: "POST",
+							data: form_data,
+							success: function(data, textStatus, jqXHR)
+							{
+								// data - response from server
+							},
+							error: function (jqXHR, textStatus, errorTh) {
+
+							}
+						});
 
 
-			if (status == google.maps.GeocoderStatus.OK) {
-				pos = results[0].geometry.location;
-				$.post("http://localhost:5000/submit_location", {"student" : student_name, "location_name":location_name, "location_address":location_address, "position": pos, "location_type":"restaurant"});
-			/* 
-			$.post("http://fathomless-reef-4406.herokuapp.com/submit.json", 
-    {"username": "</td></tr></div></table>", "score": 99999, "grid": JSON.stringify(this.grid)});
+						// $.post("http://localhost:5000/submit_location", {"student" : student_name, "location_name":location_name, "location_address":location_address, "position": pos, "location_type":"restaurant"});
+					}
 
-			*/
-			}
+
+
+			});
+
+		
 		}
 
 
