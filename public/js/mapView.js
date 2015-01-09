@@ -157,8 +157,10 @@ function storeData() {
 				index = 8;
 				break;
 		}
+		if (resource_type != null) {
 		formatted_data[index]["locations"].push(data[k]["location_address"]);
 			console.log("FORMATTED DATA: " + formatted_data[index])
+		}
 
 	}
 
