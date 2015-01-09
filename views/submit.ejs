@@ -173,8 +173,8 @@
 						form_data = {"student" : student_name, "location_name":location_name, "location_address":location_address,  "location_type":location_type, "location_neighborhood":loc_neighborhood, "lat": lat, "lng":lng};
 
 						$.ajax({
-						//	url: "http://localhost:5000/submit_location",
-							url: "http://tiu-proj.herokuapp.com/submit_location",
+							url: "http://localhost:5000/submit_location",
+						//	url: "http://tiu-proj.herokuapp.com/submit_location",
 							type: "POST",
 							data: form_data,
 							success: function(data, textStatus, jqXHR)

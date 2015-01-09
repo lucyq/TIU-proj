@@ -225,6 +225,8 @@ function renderMarkers() {
 			for (var j = 0; j < addresses.length; j++) {
 				var lat = formatted_data[i]["locations"][1];
 				var lng = formatted_data[i]["locations"][2];
+				console.log("lat: " + lat);
+				console.log("lng: " + lng);
 				var pos = new google.maps.LatLng(lat, lng);
 				console.log("POS: " + pos);
 					
@@ -235,11 +237,6 @@ function renderMarkers() {
 				});
 
 				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + formatted_data[i]["locations"][0] + "</p></div>";
-
-						// var infoWindow = new google.maps.InfoWindow({
-						// 	content: contentString,
-						// 	maxWidth: 200
-						// });
 
 				var infowindow = new google.maps.InfoWindow();
 

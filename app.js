@@ -341,12 +341,6 @@ app.post("/submit_location", function(req, res, next) {
 			var location_neighborhood = req.body.location_neighborhood;
 			var lat = req.body.lat;
 			var lng = req.body.lng;
-			
-			console.log(student);
-			console.log(location_name);
-			console.log(location_address + " " + location_type + " " + location_neighborhood)
-			console.log(lat);
-			console.log(lng);
 
 
 			if (student == null || location_name == null || 
@@ -358,7 +352,6 @@ app.post("/submit_location", function(req, res, next) {
 				col.find({'student':student}).toArray(function(err, items){
 					col.insert({'student':student, 'location_name':location_name, 
 								'location_address':location_address, 'location_type':location_type, 'location_neighborhood':location_neighborhood, 'lat':lat, 'lng':lng}, function(err, items) {
-									console.log("ENTERED INTO DATABSE");
 						res.redirect('communityMap');
 					});
 				});
