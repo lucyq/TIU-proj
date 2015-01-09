@@ -8,6 +8,7 @@ body {
 	background-image: url('../images/retina_wood.png');
 
 	background-size: 800px 600px;
+	height: 100%;
 
 }
 img {
@@ -30,6 +31,7 @@ a {
 a:hover {
 	color: #FFFFFF;
 	background-color: rgba(250,230,178,0.5);
+	text-decoration: none;
 }
 
 a:visited {
@@ -261,7 +263,7 @@ select optgroup{
 }
 
  #wrap {
-    padding-top: 100px;
+ 	padding-top: 100px;
     min-height: 100px;
 
     height: 100px;
@@ -279,15 +281,16 @@ select optgroup{
   background-color: rgba(255,172,77,0.5);
   margin: 0px;
   padding: 5px;
+
 }
 
-/*@media (max-width: 767px) {
+@media (max-width: 767px) {
   #footer {
     margin-left: -20px;
     margin-right: -20px;
   }
 }
-*/
+
 .footer-text {
 	font-size: 12px;
 	padding-right: 30px;
@@ -306,8 +309,7 @@ label {
 }
 .in {
 
-background-color: rgba(250,230,178,0.4);
-background-color: rgba(100, 100,100, 0.5);
+	background-color: rgba(60,60,60, 0.9);
 }
 
 .modal-content {
