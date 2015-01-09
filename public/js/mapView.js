@@ -170,7 +170,12 @@ function storeData() {
 			var loc = data[k]["location_address"];
 			var lat = data[k]["lat"];
 			var lng = data[k]["lng"];
-			var curr_location = [loc, lat, lng];
+			var name = data[k]["location_name"];
+			var curr_location = [lat, lng, name, loc];
+		//	console.log("STORING: " + curr)
+			// curr_location.push(lat);
+			// curr_location.push(lng);
+			// curr_location.push(loc);
 			formatted_data[index]["locations"].push(curr_location);
 		}
 
@@ -216,36 +221,45 @@ function createFilterContent() {
 function renderMarkers() {
 	for (var i = 0; i < num_resource_types; i++) {
 		if (resource_type_bools[i]) {
-			console.log(formatted_data[i]["locations"])
 			renderResourceType(i);
 
-			var addresses = formatted_data[i]["locations"];
+			var addresses = formatted_data[i]["locations"]; // array of location data
+			// console.log("LOL: " + addresses[0]);
+
+			// console.log(addresses);
 			
 		
 			for (var j = 0; j < addresses.length; j++) {
-				var lat = formatted_data[i]["locations"][1];
-				var lng = formatted_data[i]["locations"][2];
-				console.log("lat: " + lat);
-				console.log("lng: " + lng);
-				var pos = new google.maps.LatLng(lat, lng);
-				console.log("POS: " + pos);
-					
-				var marker = new google.maps.Marker({
-					map: map,
-					icon: formatted_data[i]["image"],
-					position: pos
-				});
+			
+				var lat = formatted_data[i]["locations"][j][0]; 
+				var lng = formatted_data[i]["locations"][j][1];
+				var name = formatted_data[i]["locations"][j][2];
+				var address = formatted_data[i]["locations"][j][3];
 
-				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + formatted_data[i]["locations"][0] + "</p></div>";
+				if (lat != undefined && lng != undefined) {
 
-				var infowindow = new google.maps.InfoWindow();
+				// console.log("lat: " + lat);
+				// console.log("lng: " + lng);
+					var pos = new google.maps.LatLng(lat, lng);
+				// console.log("POS: " + pos);
+						
+					var marker = new google.maps.Marker({
+						map: map,
+						icon: formatted_data[i]["image"],
+						position: pos
+					});
 
-				google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
-					return function () {
-						infowindow.setContent(contentString);
-						infowindow.open(map, marker);
-					};
-				}(marker, contentString, infowindow));
+					var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + name + "</h4><p style='color: #000000'>" + address + "</p></div>";
+
+					var infowindow = new google.maps.InfoWindow();
+
+					google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
+						return function () {
+							infowindow.setContent(contentString);
+							infowindow.open(map, marker);
+						};
+					}(marker, contentString, infowindow));
+				}
 			}
 
 		}
