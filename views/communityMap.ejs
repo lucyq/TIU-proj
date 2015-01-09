@@ -57,15 +57,15 @@
         </h2>
         
         <div class="content_filter" id="resource_type_checkboxes">
-          <input type="checkbox" name="location_type" value="cafeteria">  Cafeteria</input><br>
-          <input type="checkbox" name="location_type" value="convenience_store">  Convenience Store</input><br>
-          <input type="checkbox" name="location_type" value="farmers_market">  Farmer's Market</input><br> 
-          <input type="checkbox" name="location_type" value="fast_food">  Fast Food</input><br>
-          <input type="checkbox" name="location_type" value="garden">  Garden/Farm</input><br>
-          <input type="checkbox" name="location_type" value="grocery_store">  Grocery Store</input><br>
-          <input type="checkbox" name="location_type" value="liquor_store">  Liquor Store</input><br>
-          <input type="checkbox" name="location_type" value="restaurant">  Restaurant</input><br>
-          <input type="checkbox" name="location_type" value="vending_machine">  Vending Machine</input>
+          <input type="checkbox" id="check_0" name="location_type" value="0">  Cafeteria</input><br>
+          <input type="checkbox"  id="check_1" name="location_type" value="1">  Convenience Store</input><br>
+          <input type="checkbox"  id="check_2" name="location_type" value="2">  Farmer's Market</input><br> 
+          <input type="checkbox"  id="check_3" name="location_type" value="3">  Fast Food</input><br>
+          <input type="checkbox" id="check_4" name="location_type" value="4">  Garden/Farm</input><br>
+          <input type="checkbox" id="check_5" name="location_type" value="5">  Grocery Store</input><br>
+          <input type="checkbox" id="check_6" name="location_type" value="6">  Liquor Store</input><br>
+          <input type="checkbox"  id="check_7" name="location_type" value="7">  Restaurant</input><br>
+          <input type="checkbox" id="check_8" name="location_type" value="8">  Other</input>
           <br><br>
           <input type="submit" onclick="filterByType()" value="Filter"/><br><br>
         </div>
@@ -79,6 +79,8 @@
   		</div>
 
 <script>
+
+
 
     $(".toggle_filter").bind("click", function() {
          $(".content_filter").hide();

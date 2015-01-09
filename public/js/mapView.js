@@ -122,7 +122,6 @@ function init() {
 			if (request.readyState==4 && request.status==200) {
 				
 				data = JSON.parse(request.responseText);
-				console.log("DATA: " + data[0]);
 				storeData();
 				renderMarkers();
 			}
@@ -172,10 +171,7 @@ function storeData() {
 			var lng = data[k]["lng"];
 			var name = data[k]["location_name"];
 			var curr_location = [lat, lng, name, loc];
-		//	console.log("STORING: " + curr)
-			// curr_location.push(lat);
-			// curr_location.push(lng);
-			// curr_location.push(loc);
+	
 			formatted_data[index]["locations"].push(curr_location);
 		}
 
@@ -196,38 +192,11 @@ function createFilterContent() {
 
 }
 
-
-// var address_array = [];
-// var location_array = [];
-// var positions = [];
-
-
-// function storeData() {
-// 	var count = 0;
-// 	for (k in data) {
-// 		address_array[count] = data[k]["location_address"];
-// 		location_array[count] = data[k]["location_name"];
-		
-// 		geocoder.geocode({'address': data[k]["location_address"]}, function(results, status) {
-// 			if (status == google.maps.GeocoderStatus.OK) {
-// 				positions[count] = results[0].geometry.location;
-// 				console.log("curr pos: " + positions[count]);
-// 			}
-// 		});
-// 		count++;
-// 	}
-// }
-
 function renderMarkers() {
 	for (var i = 0; i < num_resource_types; i++) {
 		if (resource_type_bools[i]) {
-			renderResourceType(i);
 
-			var addresses = formatted_data[i]["locations"]; // array of location data
-			// console.log("LOL: " + addresses[0]);
-
-			// console.log(addresses);
-			
+			var addresses = formatted_data[i]["locations"]; // array of location data		
 		
 			for (var j = 0; j < addresses.length; j++) {
 			
@@ -238,10 +207,7 @@ function renderMarkers() {
 
 				if (lat != undefined && lng != undefined) {
 
-				// console.log("lat: " + lat);
-				// console.log("lng: " + lng);
 					var pos = new google.maps.LatLng(lat, lng);
-				// console.log("POS: " + pos);
 						
 					var marker = new google.maps.Marker({
 						map: map,
@@ -266,60 +232,20 @@ function renderMarkers() {
 	}
 } 
 
-
-
-function renderResourceType(index) {
-	
-
+/* FILTERING */
+function filterByType() {
+	resetBools();
+	for (var i = 0; i < num_resource_types; i++) {
+		if($('#check_' + i).is(":checked")) {
+			resource_type_bools[i] = true;
+		}
+	}
+	init();
 }
 
 
-
-/*
-
-function renderMarkers() {
-
-	for (k in data) {
-		var address = data[k]["location_address"];
-		var location_name = data[k]["location_name"];
-						
-		geocoder.geocode({'address': address}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				var pos = results[0].geometry.location;
-			
-				var marker = new google.maps.Marker({
-					map: map,
-					icon: '../images/marker.png',
-					position: pos
-				});
-
-				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + results[0].formatted_address + "</p></div>";
-
-				// var infoWindow = new google.maps.InfoWindow({
-				// 	content: contentString,
-				// 	maxWidth: 200
-				// });
-
-				var infowindow = new google.maps.InfoWindow();
-
-				google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
-					return function () {
-						infowindow.setContent(contentString);
-						infowindow.open(map, marker);
-					};
-				}(marker, contentString, infowindow));
-			}
-		});
+function resetBools() {
+	for (var i = 0; i < num_resource_types; i++) {
+		resource_type_bools[i] = false;
 	}
 }
-
-*/
-
-
-
-/* FILTERING */
-function filterType() {
-
-}
-
-
