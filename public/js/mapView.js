@@ -62,10 +62,23 @@
 // ];
 // var location_names[][];
 
+
+var formatted_data = [{"resource_type":"cafeteria", "locations":[], "image":"marker1.png"},
+			{"resource_type":"convenience_store", "locations":{}, "image":"marker2.png"},
+			{"resource_type":"farmers_market", "locations":{}, "image":"marker3.png"},
+			{"resource_type":"fast_food", "locations":{}, "image":"marker4.png"},
+			{"resource_type":"garden/farm", "locations":{}, "image":"marker5.png"},
+			{"resource_type":"grocery_store", "locations":{}, "image":"marker6.png"},
+			{"resource_type":"liquor_store", "locations":{}, "image":"marker7.png"},
+			{"resource_type":"restaurant", "locations":{}, "image":"marker8.png"},
+			{"resource_type":"other", "locations":{}, "image":"marker9.png"},
+						];
+					
 var BLS;
 var BLS_lat = 42.3380;
 var BLS_long = -71.1020;
 
+var toggle_all = true;
 
 var geocoder;
 var service;
@@ -88,19 +101,70 @@ function init() {
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 	var request = new XMLHttpRequest();
+	if (toggle_all) {
 		request.open("GET", "/location_data", true);
+
+	} else {
+
+		request.open("GET", "/location_data", true);
+	}
 		request.send();
 		request.onreadystatechange = function() {
 			if (request.readyState==4 && request.status==200) {
 				
 				data = JSON.parse(request.responseText);
-			
+				console.log("DATA: " + data);
+				storeData();
 				renderMarkers();
 			}
 	};
 		map.panTo(BLS);
 
 };
+
+
+function storeData() {
+	for (k in data) {
+		var resource_type = data[k]["resource_type"];
+		console.log(resource_type);
+		var index;
+		switch (resource_type) {
+			case "cafeteria":
+				index = 0;
+				break;
+			case "convenience_store":
+				index = 1;
+				break;
+			case "farmers_market":
+				index = 2;
+				break;
+			case "fast_food":
+				index = 3;
+				break;
+			case "garden/farm":
+				index = 4;
+				break;
+			case "grocery_store":
+				index = 5;
+				break;
+			case "liquor_store":
+				index = 6;
+				break;
+			case "restaurant":
+				index = 7;
+				break;
+			case "other":
+				index = 8;
+				break;
+		}
+		formatted_data[index]["locations"].push(data[k]["location_address"]);
+			console.log("FORMATTED DATA: " + formatted_data[index])
+
+	}
+
+}
+
+
 
 function createFilterContent() {
 	// for (int i = 0; i < num_areas; i++) {

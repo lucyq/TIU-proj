@@ -6,7 +6,7 @@
     display: none;
   }
 
-  .toggle_filter {
+  .toggle_filter  {
     background-color: rgba(100,100,100,0.3);
 
   }
@@ -14,6 +14,16 @@
   .toggle_filter:hover {
     background-color: rgba(250,230,178,0.5);
   }
+
+    .toggle_data {
+    background-color: rgba(100,100,100,0.3);
+
+  }
+
+  .toggle_data:hover {
+    background-color: rgba(250,230,178,0.5);
+  }
+
 
   </style>
 
@@ -25,6 +35,16 @@
 <body onload="init()">
 	<h1>Community Map</h1>
 
+    <div class="info">
+    <h2>
+            <span class="toggle_data" divId="all_classes">View All Classes</span>
+            <span class="toggle_data" divId="user_class">View Your Class</span>
+            <span class="toggle_data" divId="other">Other</span>
+
+            </h2>
+
+
+    </div>
 		
 		<div id ="map_canvas"></div>
   	
