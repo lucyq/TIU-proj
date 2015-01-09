@@ -137,6 +137,12 @@ h4 {
 	color: #FFFFFF;
 }
 
+.notification_header {
+	font-size: 28px;
+ 	background-color: rgba(255,172,77,0.5);
+}
+
+
 
 .info {
 	background-color: rgba(78,154,182,0.4);
@@ -149,16 +155,21 @@ h4 {
 
 }
 
+.checkbox_form {
+	font-family: 'Source Sans Pro';
+	font-size: 16px;
+	color: #FFF;
+}
+
 /* Community Map needs */
 
 
 #map_canvas {
-	width: 100%;
+	width: 95%;
 	height: 400px;
 	position: absolute;
-	margin-left: 20px;
-	margin-right: 20px;
-	float: left;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
 }
 
 
@@ -265,9 +276,6 @@ select optgroup{
 
 }
 #footer {
-  background-color: rgba(145,202,202,0.5);
-  background-color: rgba(107,162,153,0.5);
-  background-color: rgba(78,182,175,0.4);
   background-color: rgba(255,172,77,0.5);
   margin: 0px;
   padding: 5px;

@@ -352,7 +352,8 @@ app.post("/submit_location", function(req, res, next) {
 				col.find({'student':student}).toArray(function(err, items){
 					col.insert({'student':student, 'location_name':location_name, 
 								'location_address':location_address, 'location_type':location_type, 'location_neighborhood':location_neighborhood, 'lat':lat, 'lng':lng}, function(err, items) {
-						res.redirect('communityMap');
+						//res.redirect('communityMap');
+						res.send("success");
 					});
 				});
 			}
@@ -366,7 +367,6 @@ app.get('/location_data', function (req, res, next) {
 		db.collection('TIU_locations', function(err, col){
 			if (!err) {
 				col.find().toArray(function(err, items) {
-					console.log(items);
 					res.send(items);
 				});
 			}
@@ -408,7 +408,7 @@ app.get('/hyp_data', function(req, res, next) {
 var port = process.env.PORT || 5000;
 
 app.listen(port, function() {
-	console.log("Listening in port " + port);
+	console.log("Listening in on port " + port);
 });
 
 

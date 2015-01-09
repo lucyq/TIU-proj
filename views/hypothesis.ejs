@@ -3,6 +3,10 @@
 
 <body onload="loadContent()">
 <h1>Student Hypotheses</h1>
+<% if (!isAuthenticated) { %>
+	<h2><span class="notification_header">Log in to submit your own hypothesis about global food consumption</span></h2>
+
+<% } %>
 <div class="info">
 	<div id="hypothesis_list">
 		
@@ -15,7 +19,6 @@
 	var data;
 
 	function loadContent() {
-		console.log("WHAAT?")
 		var request = new XMLHttpRequest(); 
 			request.open("GET", "/hyp_data", true);
 			request.send();

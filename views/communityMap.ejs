@@ -35,28 +35,37 @@
 <body onload="init()">
 	<h1>Community Map</h1>
 
-    <h2>
-        <span class="toggle_data" divId="all_classes">View All Classes</span>
-        <span class="toggle_data" divId="user_class">View Your Class</span>
-        <span class="toggle_data" divId="other">Other</span>
+    <h2>  
+        <% if(!isAuthenticated) { %>
+            <span class="notification_header"> Log in to submit data and view your class</span>
+        <% } else { %>
+            <span class="toggle_data" divId="all_classes">View All Classes</span>
+            <span class="toggle_data" divId="user_class">View Your Class</span>
+            <span class="toggle_data" divId="other">Other</span>
+        <% } %>
+
 
     </h2>
 
 
+
 		
-		<div id ="map_canvas"></div>
+	<div id ="map_canvas"></div>
   	
       <div id="viz">
         <h2>Visualization</h2>
+        <p>COMING SOON!</p>
         <canvas data-processing-sources="../js/map_chart.pde"></canvas>
       </div>
+
   		<div id="desc">
   			<h2 style="text-align: left">Filter by   
-          <span class="toggle_filter" divId="location_checkboxes">Location</span>
-          <span class="toggle_filter" divId="resource_type_checkboxes">Resource Type</span>
+<!--           <span class="toggle_filter" divId="location_checkboxes">Location</span>
+ -->         <!--  <span class="toggle_filter" divId="resource_type_checkboxes"> -->Resource Type</span>
         </h2>
         
-        <div class="content_filter" id="resource_type_checkboxes">
+       <!--  <div class="content_filter" id="resource_type_checkboxes"> -->
+        <div id="resource_type_checkboxes" class="checkbox_form">
           <input type="checkbox" id="check_0" name="location_type" value="0">  Cafeteria</input><br>
           <input type="checkbox"  id="check_1" name="location_type" value="1">  Convenience Store</input><br>
           <input type="checkbox"  id="check_2" name="location_type" value="2">  Farmer's Market</input><br> 
@@ -75,9 +84,7 @@
         </div>
 
 
-
-  		</div>
-
+<!-- 
 <script>
 
 
@@ -91,5 +98,5 @@
 
 
 </script>
-
+ -->
 </body>
