@@ -12,6 +12,10 @@
 
 	}
 
+	.profile_content {
+		width: 40%;
+	}
+
 </style>
 <h1>About</h1>
 
@@ -21,9 +25,10 @@
 
 <div class="info">
 	<h2>People</h2>
+	<br>
 
 
-	<div id="profiles">
+	<div class="container" id="profiles">
 <!-- 		<div>
 			<img class="headshot" src="../images/kim_wilson.jpg">
 			<h3 style="text-align: left">Kim Wilson</h3>
@@ -48,24 +53,16 @@
 
 		{'name':'Emily Scott', 'image':'../images/emily_scott.jpg', 'role':' ','desc':'coming soon', 'email':'lucyzqin@gmail.com?subject=Hi Lucy!'},
 
-		{'name':'Lucy Qin', 'image':'../images/lucy_qin.jpg', 'role':'Technical Lead','desc':'Lucy is a senior at Tufts University studying computer science and economics.', 'email':'lucyzqin@gmail.com?subject=Hi Lucy!'},
+		{'name':'Lucy Qin', 'image':'../images/lucy_qin.jpg', 'role':'Technical Lead','desc':'Lucy is a senior at Tufts University studying computer science and economics. She enjoys building web applications, data visualizations, and just about anything else. She is also deeply interested in economic development, particularly in relation to urbanization and the spread of technology. Given this medley of interests, Lucy hopes to apply her programming skills to international issues such as conflict, health and humanitarian relief.', 'email':'lucyzqin@gmail.com?subject=Hi Lucy!'},
 
-		{'name':'Jenny Aker', 'image':'../images/jenny_aker.jpg', 'role':'','desc':'Jenny Aker teaches courses in development economics at the Fletcher School, Tufts University, where she is also Deputy Director of the Hitachi Center for Technology and International Affairs. Prior to Fletcher, Jenny worked as Deputy Regional Director of Catholic Relief Services, a global NGO, in West Africa.', 'email':'#'},
+		{'name':'Jenny Aker', 'image':'../images/jenny_aker.jpg', 'role':'','desc':'Jenny C. Aker is an Assistant Professor of Economics at The Fletcher School and Department of Economics at Tufts University. She is also a Non-Resident Fellow at the Center for Global Development and a member of the Advisory Board for Frontline SMS. After working for Catholic Relief Services as Deputy Regional Director in West and Central Africa between 1998 and 2003, Jenny returned to complete her PhD in agricultural economics at the University of California-Berkeley. Jenny works on economic development in Africa, with a primary focus on the impact of information and information technology on development outcomes, particularly in the areas of agriculture, agricultural marketing and education; the relationship between shocks and agricultural food market performance; the determinants of agricultural technology adoption; and impact evaluations of NGO and World Bank projects. Jenny has conducted field work in many countries in West and Central Africa, including Benin, Burkina Faso, Burundi, DRC, The Gambia, Ghana, Liberia, Mali, Mozambique, Niger, Nigeria, Rwanda, Senegal, Sierra Leone and Sudan, as well as Haiti and Guatemala.', 'email':'#'},
 
-		{'name':'Eric Braun', 'image':'../images/eric_braun.jpg', 'role':'Faculty Advisor','desc':'COMING SOON', 'email':'#'},
-
-		
-
-
-
-
-		
- 
+		{'name':'Eric Braun', 'image':'../images/eric_braun.jpg', 'role':'Faculty Advisor','desc':'Eric Braun has spent over 20 years developing solutions in high tech companies, professional services organizations and startups. He has founded or co-founded 5 successful companies. Over the course of his professional career and as a parent, education has become an important force in his life. In the late 90′s and early 2000′s, he collaborated on some of the first e-learning platforms for the web and has strived to make learning more engaging for students. Some of his early experience in teaching came from coaching Destination Imagination teams in grades K-7. These experiences were early experiments in project-based learning where students excelled beyond expectations.In addition to his work at 30hands, he is currently working with local school districts and colleges on providing better methods of teaching entrepreneurship and technical courses through Blended Learning and Project-Based Learning techniques.', 'email':'#'} 
 
 	];
 
 	for (k in people) {
-		$("#profiles").append("<img class='headshot' src='" + people[k]["image"] + "'><h4 style='text-align: left'>" + people[k]["name"] + " | " + people[k]["role"] + "</h4><p>" + people[k]["desc"] + "</p><a href='mailto:" + people[k]["email"] + "'>Contact</a><br><br>");
+		$("#profiles").append("<div class='row'><div class='col-md-4'><img class='headshot' src='" + people[k]["image"] + "'></div><div class='col-md-8 profile_content'><h4 style='text-align: left'>" + people[k]["name"] + " | " + people[k]["role"] + "</h4><p>" + people[k]["desc"] + "</p><a href='mailto:" + people[k]["email"] + "'>Contact</a></div></div><br><br><br><br>");
 	}
 
 

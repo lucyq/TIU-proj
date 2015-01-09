@@ -1,8 +1,16 @@
 <% layout('layout') -%>
 
+<h1>Hello, <span id="user"></span> 
+</h1>
 
-<h1>Hello, 
-<%user.username%></h1>
+<script> 
+var userObject = <%- JSON.stringify(user) %>;
+
+var username = userObject['id'];
+
+$("#user").append(userObject['id']);
+
+ </script>
 
 <div class="info">
 <br><br>

@@ -11,15 +11,12 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // creates in memory store
 var mongo = require('mongodb');
 
-
-
 var passport = require('passport');
 var passportLocal = require('passport-local');
 var passportHttp = require('passport-http');
 var crypto = require('crypto');
 
 var app = express();
-
 
 // - - - - - - - - - - - - - - - //
 //   C O N F I G U R A T I O N   //
@@ -128,13 +125,6 @@ app.post('/login', passport.authenticate('local', {
 	successRedirect: '/landing'
 }));
 
-// app.post('/login', passport.authenticate('local'), function(req,res) {
-// 	failureRedirect: '/login',
-// 	successRedirect: '/'
-// 	// res.redirect('/');
-// }));
-
-
 app.post('/create_account', function(req, res, next){
 	mongo.Db.connect(mongoUri, function (err,db){
 		db.collection('TIU_users', function(err, col) {
@@ -176,7 +166,6 @@ app.post('/create_account', function(req, res, next){
 			     						col.find({'username':username}).toArray(function(err, items) {
 			     							// TODO: what do i put here?
 			     						});
-
      					});
    						res.redirect("/");
      				}
@@ -270,6 +259,7 @@ app.get('/manageClasses', function (req, res) {
 app.get('/landing', function (req, res) {
 	res.render('landing', {
 		isAuthenticated: req.isAuthenticated(),
+		//user: req.user
 		user: req.user
 	});
 });

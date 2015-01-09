@@ -28,11 +28,8 @@ a {
 }
 
 a:hover {
-/*	color: rgb(181, 208, 186); 
-	color: rgb(181, 204, 208); 
-*/	
-color: #FFFFFF;
-background-color: rgba(250,230,178,0.5);
+	color: #FFFFFF;
+	background-color: rgba(250,230,178,0.5);
 }
 
 a:visited {
