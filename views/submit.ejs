@@ -20,6 +20,9 @@
 </style>
 </head>
 
+<% if (!isAuthenticated) { %>
+	<h2><span class="notification_header">Please log in first</span></h2>
+<% } else { %>
 
 <h1>Submit Data</h1>
 
@@ -190,3 +193,5 @@
 		}
 
 	</script>
+
+<% } %>

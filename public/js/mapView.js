@@ -197,13 +197,16 @@ function renderMarkers() {
 		if (resource_type_bools[i]) {
 
 			var addresses = formatted_data[i]["locations"]; // array of location data		
-		
+			var type = formatted_data[i]["resource_type"];			
+
 			for (var j = 0; j < addresses.length; j++) {
 			
-				var lat = formatted_data[i]["locations"][j][0]; 
-				var lng = formatted_data[i]["locations"][j][1];
-				var name = formatted_data[i]["locations"][j][2];
-				var address = formatted_data[i]["locations"][j][3];
+				var lat = addresses[j][0]; 
+				var lng = addresses[j][1];
+				var name = addresses[j][2];
+				var address = addresses[j][3];
+				var type = formatted_data[i]["resource_type"]; // ADD THIS TO THE MSG IF YOU WANT TO DISPLAY TYPE
+				var image = "../images/marker" + i + ".png";
 
 				if (lat != undefined && lng != undefined) {
 
@@ -211,7 +214,8 @@ function renderMarkers() {
 						
 					var marker = new google.maps.Marker({
 						map: map,
-						icon: formatted_data[i]["image"],
+						icon: image,
+					//	icon: formatted_data[i]["image"],
 						position: pos
 					});
 
