@@ -339,6 +339,8 @@ app.post("/submit_location", function(req, res, next) {
 			var location_address = req.body.location_address;
 			var location_type = req.body.location_type;
 			var location_neighborhood = req.body.location_neighborhood;
+			var lat = req.body.lat;
+			var lng = req.body.lng;
 
 			if (student == null || location_name == null || 
 				location_address == null || location_type == null ||
@@ -348,7 +350,7 @@ app.post("/submit_location", function(req, res, next) {
 			} else {
 				col.find({'student':student}).toArray(function(err, items){
 					col.insert({'student':student, 'location_name':location_name, 
-								'location_address':location_address, 'location_type':location_type, 'location_neighborhood':location_neighborhood}, function(err, items) {
+								'location_address':location_address, 'location_type':location_type, 'location_neighborhood':location_neighborhood, 'lat':lat, 'lng':lng}, function(err, items) {
 						res.redirect('communityMap');
 					});
 				});

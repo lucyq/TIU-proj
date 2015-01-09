@@ -26,7 +26,7 @@
 	<div class="info">
 		<br><h2>
 			<span class="toggle_forms" divId="hypothesis">Student Hypotheses</span>
-			<span class="toggle_forms" divId="communityMap">What We Eat</span>
+			<span class="toggle_forms" divId="communityMap">Food Resource Location</span>
 			<span class="toggle_forms" divId="studentProjs">Student Projects</span>
 		</h2>
 
@@ -47,20 +47,25 @@
 		 -->			Name:<br> <input type="text" class="textbox" id="student_name" name="name"/><br><br>
 					Name of location:<br> <input class="textbox" id="location_name" type="text" name="location_name"/><br><br>
 					Address of location:<br> <input type="text" id="location_address" class="textbox"  size="50" name="location_address"/><br><br>
-					Type of food resource: <br><br>
-					<input type="radio" name="location_type" value="cafeteria">  Cafeteria</input><br>
-					<input type="radio" name="location_type" value="convenience_store">  Convenience Store</input><br>
-					<input type="radio" name="location_type" value="farmers_market">  Farmer's Market</input><br>	
-					<input type="radio" name="location_type" value="fast_food">  Fast Food</input><br>
-					<input type="radio" name="location_type" value="garden/farm">  Garden/Farm</input><br>
-					<input type="radio" name="location_type" value="grocery_store">  Grocery Store</input><br>
-					<input type="radio" name="location_type" value="liquor_store">  Liquor Store</input><br>
-					<input type="radio" name="location_type" value="restaurant">  Restaurant</input><br>
-					<input type="radio" name="location_type" value="other">  Other</input>
+					
+					<select name="location_type" id="resource_type">
+						<option id="base">Please select a resource type</option>
+					
+						<option name="location_type" value="cafeteria">  Cafeteria</option><br>
+						<option  name="location_type" value="convenience_store">  Convenience Store</option><br>
+						<option name="location_type" value="farmers_market">  Farmer's Market</option><br>	
+						<option  name="location_type" value="fast_food">  Fast Food</option><br>
+						<option   name="location_type" value="garden/farm">  Garden/Farm</option><br>
+						<option name="location_type" value="grocery_store">  Grocery Store</option><br>
+						<option name="location_type" value="liquor_store">  Liquor Store</option><br>
+						<option name="location_type" value="restaurant">  Restaurant</option><br>
+						<option name="location_type" value="other">  Other</option>
+					</select>
 					<br><br>
 
 					<!--neighborhoods-->
-					<select name="location_neighborhood">
+
+					<select name="location_neighborhood" id="loc_neighborhood">
 					 	<option id="base"> Please select a neighborhood </option>
 						<optgroup label="Boston">
 							<option class="location_neighborhood" value="Charlestown"> Charlestown </option>
@@ -146,49 +151,51 @@
 		var location_address;
 		var pos;
 		var location_type;
+		var loc_neighborhood;
+
 
 		var geocoder;
 
 
 		function codeAddress() {
-			console.log('here')
 			student_name = document.getElementById("student_name").value;
 			location_name = document.getElementById("location_name").value;
 			location_address = document.getElementById("location_address").value;
-			
-			console.log(location_address);
+
+			var dropdown = document.getElementById("loc_neighborhood");
+
+			loc_neighborhood = dropdown.options[dropdown.selectedIndex].value;
+
+		
+
+			dropdown = document.getElementById("resource_type");
+			location_type = dropdown.options[dropdown.selectedIndex].value;
+
+		
 			geocoder = new google.maps.Geocoder();
-			geocoder.geocode({'address':location_address}, function(results,status){
-					console.log("RESULTS: " + results)
+			geocoder.geocode({'address':location_address}, function(results,status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						pos = results[0].geometry.location;
-						console.log(pos);
+						var lat = pos["k"];
+					
+						var lng = pos["d"];
 
-						form_data = {"student" : student_name, "location_name":location_name, "location_address":location_address, "position": pos, "location_type":"restaurant"};
+						form_data = {"student" : student_name, "location_name":location_name, "location_address":location_address, "lat": lat, "lng":lng, "location_type":"restaurant"};
 
 						$.ajax({
-							url: "/submit_location",
+							url: "http://localhost:5000/submit_location",
 							type: "POST",
 							data: form_data,
 							success: function(data, textStatus, jqXHR)
 							{
-								// data - response from server
+								console.log("SUCCESS!");
 							},
 							error: function (jqXHR, textStatus, errorTh) {
-
+								console.log("ERROR!");
 							}
 						});
-
-
-						// $.post("http://localhost:5000/submit_location", {"student" : student_name, "location_name":location_name, "location_address":location_address, "position": pos, "location_type":"restaurant"});
 					}
-
-
-
 			});
-
-		
 		}
-
 
 	</script>
