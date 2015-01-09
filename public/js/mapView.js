@@ -63,15 +63,15 @@
 // var location_names[][];
 
 
-var formatted_data = [{"resource_type":"cafeteria", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"convenience_store", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"farmers_market", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"fast_food", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"garden/farm", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"grocery_store", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"liquor_store", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"restaurant", "locations":[], "image":"../images/marker.png"},
-			{"resource_type":"other", "locations":[], "image":"../images/marker.png"},
+var formatted_data = [{"resource_type":"cafeteria", "locations":[], "image":"../images/marker1.png"},
+			{"resource_type":"convenience_store", "locations":[], "image":"../images/marker2.png"},
+			{"resource_type":"farmers_market", "locations":[], "image":"../images/marker3.png"},
+			{"resource_type":"fast_food", "locations":[], "image":"../images/marker4.png"},
+			{"resource_type":"garden/farm", "locations":[], "image":"../images/marker5.png"},
+			{"resource_type":"grocery_store", "locations":[], "image":"../images/marker6.png"},
+			{"resource_type":"liquor_store", "locations":[], "image":"../images/marker7.png"},
+			{"resource_type":"restaurant", "locations":[], "image":"../images/marker8.png"},
+			{"resource_type":"other", "locations":[], "image":"../images/marker9.png"},
 						];
 					
 var BLS;
@@ -84,7 +84,7 @@ var geocoder;
 var service;
 var map;
 
-var num_resource_types = 10;
+var num_resource_types = 9;
 
 var resource_type_bools = [];
 
@@ -221,6 +221,7 @@ function renderMarkers() {
 				geocoder.geocode({'address': addresses[j]}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						var pos = results[0].geometry.location;
+					
 					
 						var marker = new google.maps.Marker({
 							map: map,
