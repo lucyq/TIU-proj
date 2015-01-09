@@ -10,7 +10,6 @@ var engine = require('ejs-locals');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session'); // creates in memory store
 var mongo = require('mongodb');
-
 var passport = require('passport');
 var passportLocal = require('passport-local');
 var passportHttp = require('passport-http');

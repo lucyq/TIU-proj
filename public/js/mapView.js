@@ -63,15 +63,15 @@
 // var location_names[][];
 
 
-var formatted_data = [{"resource_type":"cafeteria", "locations":[], "image":"marker1.png"},
-			{"resource_type":"convenience_store", "locations":{}, "image":"marker2.png"},
-			{"resource_type":"farmers_market", "locations":{}, "image":"marker3.png"},
-			{"resource_type":"fast_food", "locations":{}, "image":"marker4.png"},
-			{"resource_type":"garden/farm", "locations":{}, "image":"marker5.png"},
-			{"resource_type":"grocery_store", "locations":{}, "image":"marker6.png"},
-			{"resource_type":"liquor_store", "locations":{}, "image":"marker7.png"},
-			{"resource_type":"restaurant", "locations":{}, "image":"marker8.png"},
-			{"resource_type":"other", "locations":{}, "image":"marker9.png"},
+var formatted_data = [{"resource_type":"cafeteria", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"convenience_store", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"farmers_market", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"fast_food", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"garden/farm", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"grocery_store", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"liquor_store", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"restaurant", "locations":[], "image":"../images/marker.png"},
+			{"resource_type":"other", "locations":[], "image":"../images/marker.png"},
 						];
 					
 var BLS;
@@ -84,6 +84,16 @@ var geocoder;
 var service;
 var map;
 
+var num_resource_types = 10;
+
+var resource_type_bools = [];
+
+for (var i = 0 ; i < num_resource_types; i++) {
+	resource_type_bools[i] = true;
+}
+
+
+
 var mapOptions = {
 	zoom: 12,
 	center: BLS, 
@@ -91,7 +101,6 @@ var mapOptions = {
 };
 
 function init() {
-
 	//createFilterContent();
 
 	geocoder = new google.maps.Geocoder();
@@ -113,7 +122,6 @@ function init() {
 			if (request.readyState==4 && request.status==200) {
 				
 				data = JSON.parse(request.responseText);
-				console.log("DATA: " + data);
 				storeData();
 				renderMarkers();
 			}
@@ -125,8 +133,7 @@ function init() {
 
 function storeData() {
 	for (k in data) {
-		var resource_type = data[k]["resource_type"];
-		console.log(resource_type);
+		var resource_type = data[k]["location_type"];
 		var index;
 		switch (resource_type) {
 			case "cafeteria":
@@ -157,9 +164,9 @@ function storeData() {
 				index = 8;
 				break;
 		}
+
 		if (resource_type != null) {
-		formatted_data[index]["locations"].push(data[k]["location_address"]);
-			console.log("FORMATTED DATA: " + formatted_data[index])
+			formatted_data[index]["locations"].push(data[k]["location_address"]);
 		}
 
 	}
@@ -201,7 +208,58 @@ function createFilterContent() {
 // 	}
 // }
 
+function renderMarkers() {
+	for (var i = 0; i < num_resource_types; i++) {
+		if (resource_type_bools[i]) {
+			console.log(formatted_data[i]["locations"])
+			renderResourceType(i);
 
+			var addresses = formatted_data[i]["locations"];
+			var image = formatted_data[i]["image"];
+
+			for (var j = 0; j < addresses.length; j++) {
+				geocoder.geocode({'address': addresses[j]}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						var pos = results[0].geometry.location;
+					
+						var marker = new google.maps.Marker({
+							map: map,
+							icon: image,
+							position: pos
+						});
+
+						var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + results[0].formatted_address + "</p></div>";
+
+						// var infoWindow = new google.maps.InfoWindow({
+						// 	content: contentString,
+						// 	maxWidth: 200
+						// });
+
+						var infowindow = new google.maps.InfoWindow();
+
+						google.maps.event.addListener(marker, 'click', function(marker, contentString, infowindow) {
+							return function () {
+								infowindow.setContent(contentString);
+								infowindow.open(map, marker);
+							};
+						}(marker, contentString, infowindow));
+					}
+				});
+
+			}
+		}
+	} 
+}
+
+
+function renderResourceType(index) {
+	
+
+}
+
+
+
+/*
 
 function renderMarkers() {
 
@@ -213,7 +271,6 @@ function renderMarkers() {
 			if (status == google.maps.GeocoderStatus.OK) {
 				var pos = results[0].geometry.location;
 			
-			//	console.log("YO>");
 				var marker = new google.maps.Marker({
 					map: map,
 					icon: '../images/marker.png',
@@ -221,14 +278,6 @@ function renderMarkers() {
 				});
 
 				var contentString = "<div class='infoDiv'><h4 style='color: #000000'>" + "NAME GOES HERE" + "</h4><p style='color: #000000'>" + results[0].formatted_address + "</p></div>";
-				/*
-google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-    return function() {
-        infowindow.setContent(content);
-        infowindow.open(map,marker);
-    };
-})(marker,content,infowindow));  
-				*/
 
 				// var infoWindow = new google.maps.InfoWindow({
 				// 	content: contentString,
@@ -247,3 +296,14 @@ google.maps.event.addListener(marker,'click', (function(marker,content,infowindo
 		});
 	}
 }
+
+*/
+
+
+
+/* FILTERING */
+function filterType() {
+
+}
+
+
