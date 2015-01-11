@@ -41,7 +41,6 @@
 
 
 	<div id="class_list">
-		<h2>View by Class</h2>
 	</div>
 <!-- 	<h2><a href="/manageClasses"></a></h2> -->
 </div>
@@ -73,7 +72,7 @@
 			class_name = data[k]["class_name"];
 			instructor_name = data[k]["instructor"];
 
-			$("#class_list").append("<h3>" + class_name + "</h3><p>" + school_name + ", " + instructor_name + "</p>");
+			$("#class_list").append("<h2>" + class_name + "</h2><p>School: " + school_name + "<br>Instructor: " + instructor_name + "</p>");
 		}
 	}
 

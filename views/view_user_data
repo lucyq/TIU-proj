@@ -1,0 +1,23 @@
+<% layout('layout') -%>
+
+
+<h1><span id="user"></span>'s Entries </h1>
+
+<div class="content">
+	<h2><span id="user"></span>'s Hypothesis about Food Consumption</h2>
+
+	<h2>TEST</h2>
+</div>
+
+
+
+
+
+<script> 
+var userObject = <%- JSON.stringify(user) %>;
+
+var username = userObject['id'];
+
+$("#user").append(userObject['id']);
+
+ </script>

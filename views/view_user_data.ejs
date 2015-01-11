@@ -1,0 +1,33 @@
+<% layout('layout') -%>
+
+<% if (!isAuthenticated) { %>
+	<h2><span class="notification_header">Please log in first</span></h2>
+<% } else { %>
+
+<h1><span class="user"></span>'s Entries </h1>
+
+<div class="info">
+	<div id="user_hypothesis">
+	<h2><span class="user"></span>'s Hypothesis about Food Consumption</h2>
+
+	<div id="user_locations">
+	<h2><span class="user"></span>'s Food Resource Submissions</h2>
+	</div>
+
+</div>
+
+<% } %>
+
+
+
+
+
+<script> 
+var userObject = <%- JSON.stringify(user) %>;
+
+var username = userObject['id'];
+
+$(".user").append(userObject['id']);
+
+
+ </script>

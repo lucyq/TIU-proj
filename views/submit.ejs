@@ -3,19 +3,15 @@
 <style>
 	.content_forms {
 		display: none;
-
 	}
 
+	.toggle_forms {
+	    background-color: rgba(100,100,100,0.3);
+	}
 
-  .toggle_forms {
-    background-color: rgba(100,100,100,0.3);
-
-  }
-
-  .toggle_forms:hover {
-    background-color: rgba(250,230,178,0.5);
-  }
-
+	.toggle_forms:hover {
+	    background-color: rgba(250,230,178,0.5);
+	}
 
 </style>
 </head>
@@ -38,7 +34,7 @@
 	
 				<form method="post" action="/submit_hypothesis">
 					Name:<br> <input class="textbox" type="text" name="student_name"/><br><br>
-					Hypothesis:<br> <input class="textbox" type="text" name="hypothesis" size="50"/><br><br>
+					Hypothesis:<br><textarea name="hypothesis" cols="30" rows="6"></textarea><br><br>
 					<input type="submit" value="Submit"/><br><br>
 				</form>
 		</div>

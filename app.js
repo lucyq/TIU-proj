@@ -131,7 +131,8 @@ app.post('/create_account', function(req, res, next){
 			var password = req.body.password;
 			var full_name = req.body.full_name;
 			var ver_password = req.body.confirm_password;
-			var class_id = req.body.class_id;
+			var ver_code = req.body.ver_code;
+			var class_id = req.body.dropdown_class_list;
 			var email = req.body.email;
 			var time = new Date();
 
@@ -160,6 +161,7 @@ app.post('/create_account', function(req, res, next){
      								'full_name': full_name,
      								'email':email,
      								'class_id':class_id,
+     								'role':'user',
      								'created_at':time
 			     					}, {safe: true}, function(err, res) {
 			     						col.find({'username':username}).toArray(function(err, items) {
@@ -174,6 +176,60 @@ app.post('/create_account', function(req, res, next){
 	});
   
 });
+
+app.post('/create_instructor', function(req, res, next){
+	mongo.Db.connect(mongoUri, function (err,db){
+		db.collection('TIU_users', function(err, col) {
+			var username = req.body.username;
+			var password = req.body.password;
+			var full_name = req.body.full_name;
+			var ver_password = req.body.confirm_password;
+			var ver_code = req.body.ver_code;
+			var email = req.body.email;
+			var time = new Date();
+
+     		// if (username == null || password == null || ver_password == null || email == null || 
+     		// 	first_name == null || last_name == null || phone_num == null) {
+     		// 	res.send('Missing fields!');
+     		// } else if (password != ver_password){
+     		if (password != ver_password) {
+     			res.send("Passwords don't match!");
+     		} else {
+     			col.find({'username':username}).toArray(function(err, items) {
+     				if (items.length != 0) {
+     					res.send("Username has been taken!");
+     				} else {
+     					// sendgrid.send({
+     					// 	to: email,
+     					// 	from: "tiu.proj@gmail.com",
+     					// 	subject: "Welcome to HPRT Toolkit!",
+     					// 	text: "Hello " + full_name + ", welcome to HPRT Toolkit!"	
+     					// }, function(err, json) {
+     					// 	if (err) { return console.error(err); }
+     					// 	console.log(json);
+     					// });
+     					col.insert({'username':username,
+     								'password':crypto.createHash('md5').update(password).digest("hex"),
+     								'full_name': full_name,
+     								'email':email,
+     								'class_id':[],
+     								'role':'admin',
+     								'created_at':time
+			     					}, {safe: true}, function(err, res) {
+			     						col.find({'username':username}).toArray(function(err, items) {
+			     							// TODO: what do i put here?
+			     						});
+     					});
+   						res.redirect("/");
+     				}
+     			});
+     		}
+		});
+	});
+  
+});
+
+
 
 app.get('/logout', function(req, res) {
 	req.logout();
@@ -263,9 +319,16 @@ app.get('/landing', function (req, res) {
 	});
 });
 
+app.get('/view_user_data', function (req, res) {
+	res.render('view_user_data', {
+		isAuthenticated: req.isAuthenticated(),
+		//user: req.user
+		user: req.user
+	});
+});
 
 // DATA SUBMISSION
-app.post("/addNewClass", function(req, res, next){
+app.post("/add_new_class", function(req, res, next){
 	mongo.Db.connect(mongoUri, function(err, db) {
 		if (err) {
 			res.send("Error connecting to database!");
@@ -277,7 +340,7 @@ app.post("/addNewClass", function(req, res, next){
 			var instructor = req.body.instructor_name;
 			var class_name = req.body.class_name;
 			var school = req.body.school_name;
-			var code = req.body.validation_code;
+			var code = req.body.ver_code;
 
 			if (instructor == null || school == null || class_name == null || code == null ||
 				instructor == "" || school == "" || class_name == "" || code == "") {

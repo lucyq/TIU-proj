@@ -70,7 +70,10 @@ request.onreadystatechange = function() {
 			// var option = document.createElement("option");
 			// option.text = class_name;
 			// drop_down.add(option);
+						// <option name="location_type" value="cafeteria">  Cafeteria</option><br>
 			$("#dropdown_class_list").prepend("<li class='dropdown_link'><a href='#'>" + class_name + "</a></li>");
+			console.log(class_name);
+			$("#dropdown_select_class").append("<option name='class_selection'>" + class_name + "</option><br>");
 		}
 	
 	}
@@ -85,16 +88,16 @@ request.onreadystatechange = function() {
 		<div id="nav">
 			<ul>
 
-				<li role="presentation" class="dropdown">
+		<!-- 		<li role="presentation" class="dropdown">
     				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">View Modules by Class<span class="caret"></span></a>
     				<ul class="dropdown-menu" id="dropdown_class_list" role="menu">
     					<li class="dropdown_link"><a href="viewClasses">View Classes</a></li>
     				</ul>
-    			</li>
+    			</li> -->
 					<li class="nav_link active"><a href="about">About</a></li>
  					<li class="nav_link active"><a href="hypothesis">Student Hypotheses</a></li>
  					<li class="nav_link active"><a href="whatWeEat">What We Eat</a></li>
- 					<li class="nav_link active"><a href="communityMap">Community Map</a></li>
+ 					<li class="nav_link active"><a href="communityMap">Community Map</a><li class="nav_link active"><a href="viewClasses">Participating Classes</a></li>
 
 
 				<% if (!isAuthenticated) { %>
@@ -158,8 +161,12 @@ request.onreadystatechange = function() {
          			<label>Confirm Password</label><br>
          			<input class="textbox" type="password" name="confirm_password"><br><br>
 
-         			<label>Class ID</label><br>
-         			<input class="textbox" type="text" name="class_id"><br><br>
+         			<select name="dropdown_select_class" id="dropdown_select_class">
+						<option id="base">Please select your class</option>
+					</select><br><br>
+
+         			<label>Verification Code</label><br>
+         			<input class="textbox" type="text" name="ver_code"><br><br>
 
          			<label>Email Address</label><br>
          			<input class="textbox" type="text" name="email"><br><br>
