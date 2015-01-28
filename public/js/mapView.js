@@ -102,10 +102,6 @@ var mapOptions = {
 
 function init() {
 	//createFilterContent();
-
-	geocoder = new google.maps.Geocoder();
-	// service = new google.maps.places.PlacesService(map);
-
 	BLS = new google.maps.LatLng(BLS_lat, BLS_long);
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
