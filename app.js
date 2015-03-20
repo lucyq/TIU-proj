@@ -143,6 +143,7 @@ app.post('/create_account', function(req, res, next){
 			var full_name = req.body.full_name;
 			var ver_password = req.body.confirm_password;
 			var ver_code = req.body.ver_code;
+
 			var class_id = req.body.dropdown_class_list;
 			var email = req.body.email;
 			var time = new Date();
@@ -280,15 +281,26 @@ app.get('/manageClasses', function (req, res) {
 });
 
 
-app.get('/landing', function (req, res) {
-	res.render('landing', {
-		isAuthenticated: req.isAuthenticated(),
 
-		//user: req.user
-		user: req.user
-	});
-		// console.log("REQ USER: " + req.user);
+
+
+app.get('/landing', function(req, res) {
+	// console.log("Curr user: " + req.user);
+	if (req.user.id == "student") {
+		res.render('landing', {
+			isAuthenticated: req.isAuthenticated(), 
+			user: req.user
+		});
+	} else {
+		res.render('instr_landing', {
+			isAuthenticated: req.isAuthenticated(), 
+			user: req.user
+		});
+	}
 });
+
+
+
 
 app.get('/create_instructor', function(req, res) {
 	// console.log("Curr user: " + req.user);

@@ -1,0 +1,29 @@
+<% layout('layout') -%>
+
+<h1>Hello, <span id="user"></span> 
+</h1>
+
+
+<script> 
+var userObject = <%- JSON.stringify(user) %>;
+
+
+console.log("USER OBJ: " + userObject);
+
+
+var username = userObject['id'];
+
+$("#user").append(userObject['id']);
+
+ </script>
+
+<div class="info">
+<br><br>
+<h3>
+<!-- 			FILL LINKS
+ -->			
+ 	<a class="module_link" href="manageClasses">Add a Class</a>
+<!-- 	<a class="module_link" href="#">View Your Class</a> -->
+	<a class="module_link" href="submit">Submit New Data</a><br><br><br>
+</h3>
+</div>
