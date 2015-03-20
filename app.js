@@ -285,20 +285,22 @@ app.get('/manageClasses', function (req, res) {
 
 
 app.get('/landing', function(req, res) {
-	// console.log("Curr user: " + req.user);
-	if (req.user.id == "student") {
-		res.render('landing', {
+	usrname = req.user.id;
+	prefix = usrname.substring(0,3);
+
+	if (prefix == 'instr') {		
+		res.render('instr_landing', {
 			isAuthenticated: req.isAuthenticated(), 
 			user: req.user
 		});
+
 	} else {
-		res.render('instr_landing', {
+		res.render('landing', {
 			isAuthenticated: req.isAuthenticated(), 
 			user: req.user
 		});
 	}
 });
-
 
 
 
