@@ -1,3 +1,6 @@
+// TODO: view instr classes
+
+
 
 // - - - - - - - - - - - - - - //
 //   D E P E N D E N C I E S   //
@@ -77,6 +80,11 @@ function verifyCredentials(username, password, done) {
 	});
 }
 
+// passport.use('authByType', new typeStrategy({
+// 	var account = new Account();
+// 	account.
+// }));
+
 
 passport.use(new passportLocal.Strategy(verifyCredentials));
 passport.use(new passportHttp.BasicStrategy(verifyCredentials));
@@ -84,12 +92,14 @@ passport.use(new passportHttp.BasicStrategy(verifyCredentials));
 
 passport.serializeUser(function(user, done){
 	// would query database usually
-	done(null, user.name); // first arg is error
+	done(null, user); // first arg is error
+	// console.log("USER: " + user);
 }); 
 
 
-passport.deserializeUser(function(id, done) {
-	done(null, {id: id, name: id})
+passport.deserializeUser(function(user, done) {
+	done(null, user);
+	// console.log("USER:"  + user);
 });
 
 function ensureAuthorized(req, res, next) {
@@ -128,6 +138,7 @@ app.post('/create_account', function(req, res, next){
 	mongo.Db.connect(mongoUri, function (err,db){
 		db.collection('TIU_users', function(err, col) {
 			var username = req.body.username;
+
 			var password = req.body.password;
 			var full_name = req.body.full_name;
 			var ver_password = req.body.confirm_password;
@@ -135,6 +146,14 @@ app.post('/create_account', function(req, res, next){
 			var class_id = req.body.dropdown_class_list;
 			var email = req.body.email;
 			var time = new Date();
+			var class_list = [];
+
+			if (username.substring(0,5) == "instr_") {
+				role = "instr";
+			} else {
+				role = "student";
+				class_list.push(class_id);
+			}
 
      		// if (username == null || password == null || ver_password == null || email == null || 
      		// 	first_name == null || last_name == null || phone_num == null) {
@@ -147,73 +166,12 @@ app.post('/create_account', function(req, res, next){
      				if (items.length != 0) {
      					res.send("Username has been taken!");
      				} else {
-     					// sendgrid.send({
-     					// 	to: email,
-     					// 	from: "tiu.proj@gmail.com",
-     					// 	subject: "Welcome to HPRT Toolkit!",
-     					// 	text: "Hello " + full_name + ", welcome to HPRT Toolkit!"	
-     					// }, function(err, json) {
-     					// 	if (err) { return console.error(err); }
-     					// 	console.log(json);
-     					// });
      					col.insert({'username':username,
      								'password':crypto.createHash('md5').update(password).digest("hex"),
      								'full_name': full_name,
      								'email':email,
-     								'class_id':class_id,
-     								'role':'user',
-     								'created_at':time
-			     					}, {safe: true}, function(err, res) {
-			     						col.find({'username':username}).toArray(function(err, items) {
-			     							// TODO: what do i put here?
-			     						});
-     					});
-   						res.redirect("/");
-     				}
-     			});
-     		}
-		});
-	});
-  
-});
-
-app.post('/create_instructor', function(req, res, next){
-	mongo.Db.connect(mongoUri, function (err,db){
-		db.collection('TIU_users', function(err, col) {
-			var username = req.body.username;
-			var password = req.body.password;
-			var full_name = req.body.full_name;
-			var ver_password = req.body.confirm_password;
-			var ver_code = req.body.ver_code;
-			var email = req.body.email;
-			var time = new Date();
-
-     		// if (username == null || password == null || ver_password == null || email == null || 
-     		// 	first_name == null || last_name == null || phone_num == null) {
-     		// 	res.send('Missing fields!');
-     		// } else if (password != ver_password){
-     		if (password != ver_password) {
-     			res.send("Passwords don't match!");
-     		} else {
-     			col.find({'username':username}).toArray(function(err, items) {
-     				if (items.length != 0) {
-     					res.send("Username has been taken!");
-     				} else {
-     					// sendgrid.send({
-     					// 	to: email,
-     					// 	from: "tiu.proj@gmail.com",
-     					// 	subject: "Welcome to HPRT Toolkit!",
-     					// 	text: "Hello " + full_name + ", welcome to HPRT Toolkit!"	
-     					// }, function(err, json) {
-     					// 	if (err) { return console.error(err); }
-     					// 	console.log(json);
-     					// });
-     					col.insert({'username':username,
-     								'password':crypto.createHash('md5').update(password).digest("hex"),
-     								'full_name': full_name,
-     								'email':email,
-     								'class_id':[],
-     								'role':'admin',
+     								'class_list':class_list,
+     								'role': role,
      								'created_at':time
 			     					}, {safe: true}, function(err, res) {
 			     						col.find({'username':username}).toArray(function(err, items) {
@@ -295,6 +253,17 @@ app.get('/submit', function (req, res) {
 	});
 });
 
+app.get('/viewInstr_classes', function(req, res) {
+	if (req.user.id.substring(0,5) == "instr") {
+		res.render('viewInstr_classes', {
+			isAuthenticated: req.isAuthenticated(),
+			user: req.user
+		});
+	} else {
+		res.send(401).send("Permission Denied. Must be an instructor");
+	}
+});
+
 app.get('/viewClasses', function (req, res) {
 	res.render('viewClasses', {
 		isAuthenticated: req.isAuthenticated(),
@@ -314,10 +283,23 @@ app.get('/manageClasses', function (req, res) {
 app.get('/landing', function (req, res) {
 	res.render('landing', {
 		isAuthenticated: req.isAuthenticated(),
+
 		//user: req.user
 		user: req.user
 	});
+		// console.log("REQ USER: " + req.user);
 });
+
+app.get('/create_instructor', function(req, res) {
+	// console.log("Curr user: " + req.user);
+	if (req.user.id == "admin") {
+		res.render('create_instructor');
+	} else {
+		res.status(401).send("Permission denied. Must be an admin!");
+	}
+});
+
+
 
 app.get('/view_user_data', function (req, res) {
 	res.render('view_user_data', {
@@ -329,18 +311,38 @@ app.get('/view_user_data', function (req, res) {
 
 // DATA SUBMISSION
 app.post("/add_new_class", function(req, res, next){
+	var instructor = req.body.instructor_name;
+			var class_name = req.body.class_name;
+			var school = req.body.school_name;
+			var code = req.body.ver_code;
+
+
 	mongo.Db.connect(mongoUri, function(err, db) {
 		if (err) {
 			res.send("Error connecting to database!");
 		}
+
+		db.collection('TIU_users', function(err, col) {
+			if(err) {
+				res.send("Database error");
+			}
+
+			col.find({'username':instructor}).toArray(function(err, items) {
+
+				// TODO:
+				console.log("LIST: " + items.class_list);
+				items.class_list.push(class_name);
+
+
+			});
+		});
+
+
 		db.collection('TIU_classes', function(err, col) {
 			if (err) {
 				res.send("Database Error!");
 			}
-			var instructor = req.body.instructor_name;
-			var class_name = req.body.class_name;
-			var school = req.body.school_name;
-			var code = req.body.ver_code;
+			
 
 			if (instructor == null || school == null || class_name == null || code == null ||
 				instructor == "" || school == "" || class_name == "" || code == "") {
@@ -437,6 +439,7 @@ app.get('/location_data', function (req, res, next) {
 	});
 });
 
+// retrieves all classes
 app.get('/class_data', function(req, res, next) {
 	mongo.Db.connect(mongoUri, function(err, db) {
 		db.collection('TIU_classes', function(err, col){
@@ -448,6 +451,52 @@ app.get('/class_data', function(req, res, next) {
 		});
 	});
 });
+
+app.get('/instr_classes', function(req, res, next) {
+
+	var instr_name = req.query.instr;
+
+	mongo.Db.connect(mongoUri, function (err, db) {
+		db.collection('TIU_users', function(err, col) {
+			if (!err) {
+				col.find({"username": instr_name}).toArray(function(err, items) {
+					res.send(items['class_list']);
+
+				});
+			}
+		});
+
+	});
+});
+
+
+app.get('/location_data_byClass', function(request, response) {
+	// enable cross origin sharing
+	response.header("Access-Control-Allow-Origin", "*");
+  	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
+  	// get username
+  	var username = request.query.username;
+
+  	var class_ID; // get class ID from username
+  	if (class_ID === undefined) {
+  		response.send('[]');
+  	}
+  	else {
+  		// connect database
+		mongo.Db.connect(mongoUri, function (err, db) {
+			db.collection("TIU_locations", function (err, col) {
+				// find information
+				col.find({"class_ID": class_ID}).toArray(function (err, items) {
+					if (!err) {
+						response.send(items);
+					}
+				});
+			});
+		});
+	}
+});
+
 
 
 app.get('/hyp_data', function(req, res, next) {

@@ -1,0 +1,22 @@
+<% layout('layout') -%>
+
+<h1>Classes</h1>
+<div id="instr_classes"></div>
+
+
+<script>
+
+
+var userObject = <%- JSON.stringify(user) %>;
+	
+
+$.get('/instr_classes?=instr' + userObject.id, function(data) {
+	_.each(data, function() {
+		$('instr_classes').append();
+
+	});
+});
+
+
+
+</script>

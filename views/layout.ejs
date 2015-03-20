@@ -25,6 +25,8 @@
 	<!--SCRIPTS-->
 	<script src="jquery/dist/jquery.js"></script>
 	<script src="bootstrap/dist/js/bootstrap.js"></script>
+
+	<script src="underscore/underscore.js"></script>
 	
 
 <script type="text/javascript">
@@ -72,7 +74,7 @@ request.onreadystatechange = function() {
 			// drop_down.add(option);
 						// <option name="location_type" value="cafeteria">  Cafeteria</option><br>
 			$("#dropdown_class_list").prepend("<li class='dropdown_link'><a href='#'>" + class_name + "</a></li>");
-			console.log(class_name);
+			
 			$("#dropdown_select_class").append("<option name='class_selection'>" + class_name + "</option><br>");
 		}
 	
