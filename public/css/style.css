@@ -189,7 +189,7 @@ h4 {
 	position: absolute;
 }
 
-#viz {
+/*#viz {
 	margin-top: 440px;
 	width: 60%;
 	height: 400px;
@@ -201,7 +201,7 @@ h4 {
 	float: left;
 	position: absolute;
 
-}
+}*/
 
 canvas {
 	width: 100%;
