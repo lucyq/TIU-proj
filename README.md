@@ -1,4 +1,3 @@
-THIS IS US (TIU) --- LAUNCH: Mid-January 2015
 
 TIU is a joint Fletcher School of Law & Diplomacy-Boston Latin Academy Project that promotes civic engagement and social entrepreneurship among high school students at the Boston Latin School. The program is based on the use of primary data collection and analysis to allow students to become agents of change by gathering real evidence about where they live.
 
